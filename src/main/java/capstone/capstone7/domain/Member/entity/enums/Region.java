@@ -30,4 +30,15 @@ public enum Region {
     public String getKoreanName(){
         return regionKoreanName;
     }
+
+    public static Region getRegionEnumByKrName(String regionKrName){
+        for(Region region : Region.values()){
+            if(region.getKoreanName().equals(regionKrName)){
+                return region;
+            }
+        }
+        return null;
+    }
 }
+
+
