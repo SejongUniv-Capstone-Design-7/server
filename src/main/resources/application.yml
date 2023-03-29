@@ -1,1 +1,17 @@
+spring:
+  profiles:
+    active: local
+  #mvc:
+    #pathmatch:
+      #matching-strategy: ant-path-matcher
+
+  #servlet:
+    #multipart:
+      #max-file-size: 50MB
+      #max-request-size: 50MB
+
+logging.level:
+  org.hibernate.SQL: debug
+
+#spring.main.allow-bean-definition-overriding: true
 
