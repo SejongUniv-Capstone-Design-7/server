@@ -1,15 +1,14 @@
 package capstone.capstone7.domain.Member.entity;
 
 import capstone.capstone7.domain.Member.entity.enums.Region;
+import capstone.capstone7.global.auth.entity.RefreshToken;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -23,11 +22,18 @@ public class Member extends BaseTimeEntity {
     private String nickname;
     private Region region;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private RefreshToken refreshToken;
+
     @Builder
     public Member(String email, String password, String nickname, Region region) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.region = region;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
     }
 }
