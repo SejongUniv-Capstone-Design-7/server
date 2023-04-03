@@ -16,3 +16,12 @@ spring:
       hibernate:
         #        show_sql: true
         format_sql: true
+
+file.local-path : C:\Users\alsju\Desktop\capstone_folder\crop_image_test
+
+logging:
+  file:
+    name: ./logs/app-local
+    max-history: 1
+    max-size: 10MB
+
