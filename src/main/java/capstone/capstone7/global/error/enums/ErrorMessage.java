@@ -2,6 +2,7 @@ package capstone.capstone7.global.error.enums;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -19,7 +20,12 @@ public enum ErrorMessage {
 
 
     // Auth
-    WRONG_REGION(BAD_REQUEST, false, "올바르지 않은 지역명입니다.");
+    WRONG_REGION(BAD_REQUEST, false, "올바르지 않은 지역명입니다."),
+    WRONG_EMAIL(BAD_REQUEST, false, "올바르지 않은 이메일입니다."),
+
+
+    // File
+    CANNOT_UPLOAD(BAD_REQUEST, false, "파일을 업로드하지 못했습니다.");
 
     private final int code;
     private final boolean isSuccess;
