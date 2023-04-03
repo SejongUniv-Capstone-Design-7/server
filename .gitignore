@@ -38,3 +38,4 @@ out/
 
 ### Project ###
 application-prod.yml
+application-security.yml
