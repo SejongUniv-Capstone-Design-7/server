@@ -16,4 +16,6 @@ public class GlobalExceptionHandler {
         return new BaseResponseDto(e.getErrorMessage());
     }
 
+
+
 }
