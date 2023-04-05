@@ -5,6 +5,7 @@ import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,10 +20,21 @@ public class Board extends BaseTimeEntity {
 
     private String title;
     private String content;
+
+    @Enumerated(EnumType.STRING)
     private Tag tag;
     private String image;
     private Boolean isSolved;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Board(String title, String content, Tag tag, String image, Member member) {
+        this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.image = image;
+        this.member = member;
+    }
 }
