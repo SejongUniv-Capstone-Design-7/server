@@ -21,7 +21,7 @@ file.local-path : C:\Users\alsju\Desktop\capstone_folder\crop_image_test
 
 logging:
   file:
-    name: ./logs/app-local
+    name: ./build/logs/app-local
     max-history: 1
     max-size: 10MB
 
