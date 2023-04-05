@@ -37,7 +37,7 @@ public class FileService {
     private String defaultLocalPath;
 
     // 병해충 진단 사진 로컬에 저장
-    public void uploadFileLocal(MultipartFile file, String crop_sort) {
+    public void uploadFileToLocal(MultipartFile file, String crop_sort) {
         if(file != null){
             String fileUrl = defaultLocalPath + File.separator + getDiagnosisFileName(file, crop_sort);
 
@@ -60,13 +60,13 @@ public class FileService {
     }
 
     // S3에 파일 업로드
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFileToS3(MultipartFile multipartFile, Long userId) {
         // 비어있는 파일인지 확인
         if (multipartFile == null) return null;
         if (multipartFile.isEmpty()) return null;
         
         String imageType = getExtension(multipartFile);
-        String savedFileName = getSavedFileName(multipartFile, imageType);// 저장할 파일명
+        String savedFileName = getSavedFileName(userId, multipartFile);// 저장할 파일명
         ObjectMetadata metadata = new ObjectMetadata();
         
         try (InputStream inputStream = multipartFile.getInputStream()) {
@@ -96,8 +96,8 @@ public class FileService {
     }
 
     // S3에 저장되는 파일명 생성
-    private String getSavedFileName(MultipartFile multipartFile, String imageType) {
-        return String.format("user%s/%s-%s", imageType, getRandomUUID(), multipartFile.getOriginalFilename());
+    private String getSavedFileName(Long userId, MultipartFile multipartFile) {
+        return String.format("user%s/%s-%s", userId, getRandomUUID(), multipartFile.getOriginalFilename());
     }
 
     // 랜덤 문자열 획득
