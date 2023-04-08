@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
     Slice<Board> findBoardListBy(Pageable pageable);
+
+    Optional<Board> getBoardById(Long id);
 }

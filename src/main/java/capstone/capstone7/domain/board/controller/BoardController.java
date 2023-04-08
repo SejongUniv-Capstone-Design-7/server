@@ -35,4 +35,8 @@ public class BoardController {
         return new SliceResponseDto<>(boardService.getBoardsList(pageable));
     }
 
+    @GetMapping("/{boardId}")
+    public BaseResponseDto<GetBoardResponseDto> getBoard(@PathVariable Long boardId){
+        return new BaseResponseDto<>(boardService.getBoard(boardId));
+    }
 }

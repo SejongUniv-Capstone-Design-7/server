@@ -2,7 +2,6 @@ package capstone.capstone7.global.error.enums;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -25,7 +24,10 @@ public enum ErrorMessage {
 
 
     // File
-    CANNOT_UPLOAD(BAD_REQUEST, false, "파일을 업로드하지 못했습니다.");
+    CANNOT_UPLOAD(BAD_REQUEST, false, "파일을 업로드하지 못했습니다."),
+
+    // Board
+    NOT_EXIST_BOARD(NOT_FOUND, false, "해당 게시글이 존재하지 않습니다.");
 
     private final int code;
     private final boolean isSuccess;

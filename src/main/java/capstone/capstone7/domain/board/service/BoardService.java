@@ -47,4 +47,8 @@ public class BoardService {
         Slice<GetBoardResponseDto> boardSliceDto = boardSlice.map(GetBoardResponseDto::new);
         return boardSliceDto;
     }
+
+    public GetBoardResponseDto getBoard(Long boardId){
+        return new GetBoardResponseDto(boardRepository.getBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
+    }
 }
