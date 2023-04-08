@@ -3,6 +3,7 @@ package capstone.capstone7.domain.board.controller;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
+import capstone.capstone7.domain.board.dto.response.BoardDeleteResponseDto;
 import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
 import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
 import capstone.capstone7.domain.board.service.BoardService;
@@ -47,5 +48,10 @@ public class BoardController {
                     MediaType.MULTIPART_FORM_DATA_VALUE})
     public BaseResponseDto<BoardUpdateResponseDto> updateBoard(@PathVariable Long boardId, @RequestPart(value = "request") BoardUpdateRequestDto boardUpdateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage,  @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(boardService.updateBoard(loginUser.getMember(), boardId, boardImage, boardUpdateRequestDto));
+    }
+
+    @DeleteMapping("/{boardId}")
+    public BaseResponseDto<BoardDeleteResponseDto> deleteBoard(@PathVariable Long boardId){
+        return new BaseResponseDto<>(boardService.deleteBoard(boardId));
     }
 }
