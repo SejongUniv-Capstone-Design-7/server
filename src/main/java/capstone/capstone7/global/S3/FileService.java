@@ -86,7 +86,7 @@ public class FileService {
     // S3에서 파일 삭제
     public void deleteFile(String fileUrl) {
         String fileName = getFileNameFromResourceUrl(fileUrl);
-        amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileName));
+        amazonS3.deleteObject(bucketName, fileName);
     }
 
     // 병해충 진단에 사용되는 파일명 생성

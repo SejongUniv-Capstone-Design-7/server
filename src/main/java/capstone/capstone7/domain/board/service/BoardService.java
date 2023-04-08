@@ -4,6 +4,7 @@ import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
+import capstone.capstone7.domain.board.dto.response.BoardDeleteResponseDto;
 import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
 import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
 import capstone.capstone7.domain.board.entity.Board;
@@ -65,5 +66,15 @@ public class BoardService {
         board.update(savedFilePath, boardUpdateRequestDto);
 
         return new BoardUpdateResponseDto(board.getId());
+    }
+
+    @Transactional
+    public BoardDeleteResponseDto deleteBoard(Long boardId){
+        Board board = boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+        if (board.getImage() != null){
+            fileService.deleteFile(board.getImage());
+        }
+        boardRepository.deleteById(boardId); // 해당 boardId를 가진 Board가 없다면, delete 요청 무시
+        return new BoardDeleteResponseDto(boardId);
     }
 }
