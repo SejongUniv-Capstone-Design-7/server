@@ -8,7 +8,7 @@
 <br>
 
 
-## ISSUE CONVENTION
+## ISSUE CONVENTION, PR CONVENTION
 ```
 [작업유형] 도메인이름 / 작업내용
 ```
