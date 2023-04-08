@@ -23,8 +23,6 @@ public class SecurityConfig {
     private static final String[] SECURITY_PERMIT_URL_ARRAY = {
             "/auth/log-in",
             "/auth/sign-up",
-            "/users/nickname/isDuplicated",
-            "/users/token-reissue",
             "/diagnosis"
     };
 
@@ -44,8 +42,8 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(SECURITY_PERMIT_URL_ARRAY).permitAll())
-                //.anyRequest().authenticated()
+                .requestMatchers(SECURITY_PERMIT_URL_ARRAY).permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 // 필터 예외
                 .exceptionHandling()

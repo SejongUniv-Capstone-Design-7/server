@@ -20,6 +20,8 @@ public class Member extends BaseTimeEntity {
     private String email;
     private String password;
     private String nickname;
+
+    @Enumerated(EnumType.STRING)
     private Region region;
 
     @OneToOne(fetch = FetchType.LAZY)
