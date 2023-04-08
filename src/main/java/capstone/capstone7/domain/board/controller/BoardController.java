@@ -1,7 +1,9 @@
 package capstone.capstone7.domain.board.controller;
 
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
+import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
+import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
 import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
 import capstone.capstone7.domain.board.service.BoardService;
 import capstone.capstone7.global.auth.entity.LoginUser;
@@ -38,5 +40,12 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public BaseResponseDto<GetBoardResponseDto> getBoard(@PathVariable Long boardId){
         return new BaseResponseDto<>(boardService.getBoard(boardId));
+    }
+
+    @PatchMapping(value = "/{boardId}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.MULTIPART_FORM_DATA_VALUE})
+    public BaseResponseDto<BoardUpdateResponseDto> updateBoard(@PathVariable Long boardId, @RequestPart(value = "request") BoardUpdateRequestDto boardUpdateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage,  @AuthenticationPrincipal LoginUser loginUser){
+        return new BaseResponseDto<>(boardService.updateBoard(loginUser.getMember(), boardId, boardImage, boardUpdateRequestDto));
     }
 }

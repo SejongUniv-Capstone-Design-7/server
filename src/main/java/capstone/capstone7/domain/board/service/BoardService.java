@@ -2,7 +2,9 @@ package capstone.capstone7.domain.board.service;
 
 import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
+import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
+import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
 import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
 import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.repository.BoardRepository;
@@ -27,6 +29,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     private final FileService fileService;
+
+    @Transactional
     public BoardCreateResponseDto createBoard(MultipartFile boardImage, BoardCreateRequestDto boardCreateRequestDto, Member member){
         String savedFilePath = fileService.uploadFileToS3(boardImage, member.getId());
 
@@ -49,6 +53,17 @@ public class BoardService {
     }
 
     public GetBoardResponseDto getBoard(Long boardId){
-        return new GetBoardResponseDto(boardRepository.getBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
+        return new GetBoardResponseDto(boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
+    }
+
+    @Transactional
+    public BoardUpdateResponseDto updateBoard(Member member, Long boardId, MultipartFile boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
+
+        Board board = boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+
+        String savedFilePath = fileService.uploadFileToS3(boardImage, member.getId());
+        board.update(savedFilePath, boardUpdateRequestDto);
+
+        return new BoardUpdateResponseDto(board.getId());
     }
 }
