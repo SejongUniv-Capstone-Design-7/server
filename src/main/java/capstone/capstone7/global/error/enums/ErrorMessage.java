@@ -25,6 +25,7 @@ public enum ErrorMessage {
 
     // File
     CANNOT_UPLOAD(BAD_REQUEST, false, "파일을 업로드하지 못했습니다."),
+    FILE_SIZE_EXCEEDED(BAD_REQUEST, false, "파일 사이즈가 10MB이하여야 합니다."),
 
     // Board
     NOT_EXIST_BOARD(NOT_FOUND, false, "해당 게시글이 존재하지 않습니다.");
