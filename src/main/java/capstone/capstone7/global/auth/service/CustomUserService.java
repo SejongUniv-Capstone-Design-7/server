@@ -5,13 +5,15 @@ import capstone.capstone7.domain.Member.repository.MemberRepository;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.error.exception.custom.AuthException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static capstone.capstone7.global.error.enums.ErrorMessage.WRONG_EMAIL;
+import static capstone.capstone7.global.error.enums.ErrorMessage.CANNOT_FIND_USER;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomUserService implements UserDetailsService {
@@ -20,7 +22,7 @@ public class CustomUserService implements UserDetailsService {
     /** Email이 DB에 존재하는지 확인 **/
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new AuthException(CANNOT_FIND_USER));
 
         /** 시큐리티 세션에 유저 정보 저장 **/
         return LoginUser.builder().member(member).build();
