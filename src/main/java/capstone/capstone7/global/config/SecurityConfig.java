@@ -1,9 +1,11 @@
 package capstone.capstone7.global.config;
 
+import capstone.capstone7.global.auth.filter.FilterExceptionHandler;
 import capstone.capstone7.global.auth.filter.JwtAccessDeniedHandler;
 import capstone.capstone7.global.auth.filter.JwtAuthenticationEntryPoint;
 import capstone.capstone7.global.auth.filter.JwtAuthenticationFilter;
 import capstone.capstone7.global.auth.jwt.TokenProvider;
+import capstone.capstone7.global.auth.service.CustomUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,21 +17,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
     // login을 위해서 permitAll하는 uri - permit uri
     private static final String[] SECURITY_PERMIT_URL_ARRAY = {
-            "/auth/log-in",
-            "/auth/sign-up",
-            "/diagnosis"
+            "/auth/**",
+            "/diagnosis",
+            "/boards/**" // 추후 정확하게 GET 요청에 대해서만 permitAll 필요
     };
 
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomUserService customUserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers(SECURITY_PERMIT_URL_ARRAY).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new FilterExceptionHandler(), JwtAuthenticationFilter.class)
                 // 필터 예외
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -56,11 +61,10 @@ public class SecurityConfig {
     }
 
     // JWT 사용을 위해서는 기본적으로 password encoder 필요
-    // Bycrypt encoder 사용
+    // 패스워드 인코더
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
 
 }
