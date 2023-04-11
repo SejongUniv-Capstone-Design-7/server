@@ -1,6 +1,7 @@
 package capstone.capstone7.global.auth.jwt;
 
 import capstone.capstone7.global.auth.entity.TokenInfo;
+import capstone.capstone7.global.error.exception.custom.InvalidTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
@@ -17,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
+
+import static capstone.capstone7.global.error.enums.ErrorMessage.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -98,18 +101,17 @@ public class TokenProvider {
             return !claims.getBody().getExpiration().before(new Date());
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException | DecodingException e) {
             log.info("잘못된 JWT 서명입니다.");
-            // throw new InvalidTokenException(ErrorMessage.WRONG_JWT_SIGNITURE);
+            throw new InvalidTokenException(WRONG_JWT_SIGNITURE);
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
-            //throw new InvalidTokenException(ErrorMessage.EXPIRED_JWT_TOKEN);
+            throw new InvalidTokenException(EXPIRED_JWT_TOKEN);
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
-            //throw new InvalidTokenException(ErrorMessage.NOT_APPLY_JWT_TOKEN);
+            throw new InvalidTokenException(NOT_APPLY_JWT_TOKEN);
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
-            //throw new InvalidTokenException(ErrorMessage.WRONG_JWT_TOKEN);
+            throw new InvalidTokenException(WRONG_JWT_TOKEN);
         }
-        return false;
     }
 
     private Claims parseClaims(String accessToken) {
