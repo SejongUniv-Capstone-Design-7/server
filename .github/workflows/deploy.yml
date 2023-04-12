@@ -48,7 +48,11 @@ jobs:
         SECURITY_SECRET_DIR: src/main/resources
         SECURITY_SECRET_DIR_FILE_NAME: application-security.yml
       run: echo $SECURITY_SECRET | base64 --decode >> $SECURITY_SECRET_DIR/$SECURITY_SECRET_DIR_FILE_NAME
-      
+
+    # Error Gradle Script ‘/Home/Runner/Work/*/Gradlew’ Is Not Executable 에러 해결
+    - name: Run chmod to make gradlew executable
+      run: chmod +x ./gradlew
+
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
