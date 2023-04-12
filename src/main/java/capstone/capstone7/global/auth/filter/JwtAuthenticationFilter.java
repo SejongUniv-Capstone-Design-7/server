@@ -24,11 +24,6 @@ import static capstone.capstone7.global.error.enums.ErrorMessage.EMPTY_TOKEN;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
-    private static final String[] SECURITY_PERMIT_URL_ARRAY = {
-            "/auth/**",
-            "/diagnosis",
-            "/boards/**" // 추후 정확하게 GET 요청에 대해서만 permitAll 필요
-    };
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -41,8 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("token validation {}", tokenProvider.validateToken(token));
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }else if(token == null){
-            throw new AuthException(EMPTY_TOKEN);
         }
 
         filterChain.doFilter(request, response);
