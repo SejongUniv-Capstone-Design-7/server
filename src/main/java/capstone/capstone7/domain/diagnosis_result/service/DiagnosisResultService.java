@@ -15,7 +15,7 @@ public class DiagnosisResultService {
     private final FileService fileService;
 
     public DiagnosisResponseDto diagnosis(MultipartFile cropImage, DiagnosisRequestDto diagnosisRequestDto){
-        fileService.uploadFileToLocal(cropImage, diagnosisRequestDto.getCrop_sort());
-        return null;
+        fileService.sendFileToAIServer(cropImage, diagnosisRequestDto.getCrop_sort());
+        return new DiagnosisResponseDto();
     }
 }
