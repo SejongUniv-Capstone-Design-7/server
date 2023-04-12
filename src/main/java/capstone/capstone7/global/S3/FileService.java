@@ -33,11 +33,11 @@ public class FileService {
     @Value("${cloud.aws.s3.bucket.url}")
     private String defaultS3Url;
 
-    @Value("${file.local-path}")
-    private String defaultLocalPath;
+//    @Value("${file.local-path}")
+//    private String defaultLocalPath;
 
     // 병해충 진단 사진 로컬에 저장
-    public void uploadFileToLocal(MultipartFile file, String crop_sort) {
+/*    public void uploadFileToLocal(MultipartFile file, String crop_sort) {
         if(file != null){
             String fileUrl = defaultLocalPath + File.separator + getDiagnosisFileName(file, crop_sort);
 
@@ -56,6 +56,13 @@ public class FileService {
             } catch (IOException e){
                 throw new BusinessException(CANNOT_UPLOAD);
             }
+        }
+    }*/
+
+    // 병해충 진단 사진 AI 서버로 보내기
+    public void sendFileToAIServer(MultipartFile file, String crop_sort){
+        if(file != null){
+            String fileName = getDiagnosisFileName(file, crop_sort);
         }
     }
 
