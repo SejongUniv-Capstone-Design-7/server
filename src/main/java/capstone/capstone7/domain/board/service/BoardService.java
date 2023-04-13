@@ -54,23 +54,23 @@ public class BoardService {
     }
 
     public GetBoardResponseDto getBoard(Long boardId){
-        return new GetBoardResponseDto(boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
+        return new GetBoardResponseDto(boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
     }
 
     @Transactional
     public BoardUpdateResponseDto updateBoard(Member member, Long boardId, MultipartFile boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
 
-        Board board = boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
 
         String savedFilePath = fileService.uploadFileToS3(boardImage, member.getId());
-        board.update(savedFilePath, boardUpdateRequestDto);
+        board.boardContentUpdate(savedFilePath, boardUpdateRequestDto);
 
         return new BoardUpdateResponseDto(board.getId());
     }
 
     @Transactional
     public BoardDeleteResponseDto deleteBoard(Long boardId){
-        Board board = boardRepository.findBoardById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
         if (board.getImage() != null){
             fileService.deleteFile(board.getImage());
         }
