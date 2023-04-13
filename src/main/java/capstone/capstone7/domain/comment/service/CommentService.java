@@ -7,6 +7,7 @@ import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
 import capstone.capstone7.domain.comment.dto.request.CommentPatchRequestDto;
 import capstone.capstone7.domain.comment.dto.response.CommentCreateResponseDto;
+import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.entity.Comment;
 import capstone.capstone7.domain.comment.repository.CommentRepository;
@@ -14,6 +15,8 @@ import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +67,9 @@ public class CommentService {
         }
 
         return new CommentPatchResponseDto(comment.getId());
+    }
+
+    public Slice<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
+        return commentRepository.findAllComment(boardId, pageable);
     }
 }
