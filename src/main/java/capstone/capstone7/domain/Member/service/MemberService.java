@@ -1,6 +1,8 @@
 package capstone.capstone7.domain.Member.service;
 
+import capstone.capstone7.domain.Member.dto.request.MemberPatchRequestDto;
 import capstone.capstone7.domain.Member.dto.response.MemberGetResponseDto;
+import capstone.capstone7.domain.Member.dto.response.MemberPatchResponseDto;
 import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.domain.Member.repository.MemberRepository;
 import capstone.capstone7.global.auth.entity.LoginUser;
@@ -26,5 +28,18 @@ public class MemberService {
         }
 
         return new MemberGetResponseDto(member.getId(), member.getEmail(), member.getNickname(), member.getRegion().getKoreanName());
+    }
+
+    @Transactional
+    public MemberPatchResponseDto updateMember(Long memberId, MemberPatchRequestDto memberPatchRequestDto, LoginUser loginUser){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
+
+        if(member.getId() != loginUser.getMember().getId()){
+            throw new BusinessException(INVALID_USER);
+        }
+
+        member.update(memberPatchRequestDto.getNickname(), memberPatchRequestDto.getRegion());
+
+        return new MemberPatchResponseDto(member.getNickname(), member.getRegion().getKoreanName());
     }
 }
