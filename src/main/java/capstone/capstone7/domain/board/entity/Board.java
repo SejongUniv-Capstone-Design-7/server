@@ -1,14 +1,15 @@
 package capstone.capstone7.domain.board.entity;
 
+import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.entity.enums.Tag;
-import capstone.capstone7.domain.Member.entity.Member;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +27,9 @@ public class Board extends BaseTimeEntity {
     private Tag tag;
     private String image;
     private Boolean isSolved;
+
+    @ColumnDefault("0")
+    private Integer likeNum;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -36,10 +40,11 @@ public class Board extends BaseTimeEntity {
         this.content = content;
         this.tag = tag;
         this.image = image;
+        this.likeNum = 0;
         this.member = member;
     }
 
-    public void update(String boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
+    public void boardContentUpdate(String boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
         if(boardImage != null){
             this.image = boardImage;
         }
@@ -55,5 +60,15 @@ public class Board extends BaseTimeEntity {
         if(boardUpdateRequestDto.getTag() != null){
             this.tag = boardUpdateRequestDto.getTag();
         }
+    }
+
+    public Integer addLike(){
+        this.likeNum += 1;
+        return this.likeNum;
+    }
+
+    public Integer minusLike(){
+        this.likeNum -= 1;
+        return this.likeNum;
     }
 }
