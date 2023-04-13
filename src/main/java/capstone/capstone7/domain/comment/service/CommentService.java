@@ -7,6 +7,7 @@ import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
 import capstone.capstone7.domain.comment.dto.request.CommentPatchRequestDto;
 import capstone.capstone7.domain.comment.dto.response.CommentCreateResponseDto;
+import capstone.capstone7.domain.comment.dto.response.CommentDeleteResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.entity.Comment;
@@ -69,7 +70,22 @@ public class CommentService {
         return new CommentPatchResponseDto(comment.getId());
     }
 
+    @Transactional(readOnly = true)
     public Slice<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
         return commentRepository.findAllComment(boardId, pageable);
+    }
+
+    public CommentDeleteResponseDto deleteComment(Long boardId, Long commentId, LoginUser loginUser) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(NOT_EXIST_COMMENT));
+
+        if(comment.getMember().getId() != loginUser.getMember().getId()){ // 댓글 작성자가 로그인한 유저와 같지 않다면
+            throw new BusinessException(NOT_VALID_USER);
+        }else if(comment.getBoard().getId() != boardId){ // path variable로 받아온 게시글 Id와 댓글의 게시글 Id가 같지 않다면
+            throw new BusinessException(NOT_EXIST_COMMENT);
+        }else{
+            commentRepository.deleteById(commentId);
+        }
+
+        return new CommentDeleteResponseDto(comment.getId());
     }
 }

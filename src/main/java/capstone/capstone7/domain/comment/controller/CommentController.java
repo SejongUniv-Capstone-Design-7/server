@@ -3,6 +3,7 @@ package capstone.capstone7.domain.comment.controller;
 import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
 import capstone.capstone7.domain.comment.dto.request.CommentPatchRequestDto;
 import capstone.capstone7.domain.comment.dto.response.CommentCreateResponseDto;
+import capstone.capstone7.domain.comment.dto.response.CommentDeleteResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.service.CommentService;
@@ -36,5 +37,10 @@ public class CommentController {
     @GetMapping("")
     public SliceResponseDto<CommentGetResponseDto> getAllComments(@PathVariable Long boardId, Pageable pageable){
         return new SliceResponseDto<>(commentService.getAllComments(boardId, pageable));
+    }
+
+    @DeleteMapping("/{commentId}")
+    public BaseResponseDto<CommentDeleteResponseDto> createComment(@PathVariable Long boardId, @PathVariable Long commentId, @AuthenticationPrincipal LoginUser loginUser){
+        return new BaseResponseDto<>(commentService.deleteComment(boardId, commentId, loginUser));
     }
 }
