@@ -9,6 +9,7 @@ import capstone.capstone7.global.auth.service.CustomUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,8 +26,18 @@ public class SecurityConfig {
     // login을 위해서 permitAll하는 uri - permit uri
     private static final String[] SECURITY_PERMIT_URL_ARRAY = {
             "/auth/**",
-            "/diagnosis",
-            "/boards/**" // 추후 정확하게 GET 요청에 대해서만 permitAll 필요
+            "/diagnosis", // 추후 정확하게 GET 요청에 대해서만 permitAll 필요
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
     };
 
     private final TokenProvider tokenProvider;
@@ -46,8 +57,10 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(SECURITY_PERMIT_URL_ARRAY).permitAll()
+                        .requestMatchers(SECURITY_PERMIT_URL_ARRAY).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/boards/**").permitAll()
                         .anyRequest().authenticated())
+
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new FilterExceptionHandler(), JwtAuthenticationFilter.class)
                 // 필터 예외
