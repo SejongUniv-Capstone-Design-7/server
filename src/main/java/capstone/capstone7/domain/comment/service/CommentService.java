@@ -60,7 +60,7 @@ public class CommentService {
         // log.info("findMember : {}", findMember); // capstone.capstone7.domain.Member.entity.Member@76184ae3
 
         if(comment.getMember().getId() != loginUser.getMember().getId()){ // 댓글 작성자가 로그인한 유저와 같지 않다면
-            throw new BusinessException(NOT_VALID_USER);
+            throw new BusinessException(INVALID_USER);
         }else if(comment.getBoard().getId() != boardId){ // path variable로 받아온 게시글 Id와 댓글의 게시글 Id가 같지 않다면
             throw new BusinessException(NOT_EXIST_COMMENT);
         }else{
@@ -79,7 +79,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new BusinessException(NOT_EXIST_COMMENT));
 
         if(comment.getMember().getId() != loginUser.getMember().getId()){ // 댓글 작성자가 로그인한 유저와 같지 않다면
-            throw new BusinessException(NOT_VALID_USER);
+            throw new BusinessException(INVALID_USER);
         }else if(comment.getBoard().getId() != boardId){ // path variable로 받아온 게시글 Id와 댓글의 게시글 Id가 같지 않다면
             throw new BusinessException(NOT_EXIST_COMMENT);
         }else{

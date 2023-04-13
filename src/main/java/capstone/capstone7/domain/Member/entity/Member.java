@@ -38,4 +38,13 @@ public class Member extends BaseTimeEntity {
     public void encodePassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(this.password);
     }
+
+    public void update(String nickname, String region){
+        if(nickname != null){
+            this.nickname = nickname;
+        }
+        if(region != null){
+            this.region = Region.getRegionEnumByKrName(region);
+        }
+    }
 }
