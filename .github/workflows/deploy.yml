@@ -35,12 +35,12 @@ jobs:
         java-version: '17'
         
     # Ignore yml 파일 추가
-    - name: Copy dev secret
+    - name: Copy prod secret
       env:
-        DEV_SECRET: ${{ secrets.DEV_SECRET }}
-        DEV_SECRET_DIR: src/main/resources
-        DEV_SECRET_DIR_FILE_NAME: application-dev.yml
-      run: echo $DEV_SECRET | base64 --decode >> $DEV_SECRET_DIR/$DEV_SECRET_DIR_FILE_NAME
+        PROD_SECRET: ${{ secrets.PROD_SECRET }}
+        PROD_SECRET_DIR: src/main/resources
+        PROD_SECRET_DIR_FILE_NAME: application-prod.yml
+      run: echo $PROD_SECRET | base64 --decode >> $PROD_SECRET_DIR/$PROD_SECRET_DIR_FILE_NAME
         
     - name: Copy security secret
       env:
