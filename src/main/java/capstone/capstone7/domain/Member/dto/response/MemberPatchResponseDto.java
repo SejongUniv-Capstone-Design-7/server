@@ -5,11 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MemberGetResponseDto {
-    private Long id;
-
-    private String email;
+public class MemberPatchResponseDto {
     private String nickname;
-
     private String region;
 }
