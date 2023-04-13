@@ -28,7 +28,7 @@ public enum ErrorMessage {
     WRONG_EMAIL(702, false, "올바르지 않은 이메일입니다."),
     NOT_EXIST_USER(703, false, "해당 유저를 찾을 수 없습니다."),
     DUPLICATED_USER(704, false, "이미 해당 이메일을 가진 유저가 있습니다."),
-    NOT_VALID_USER(705, false, "로그인한 유저가 댓글 작성자와 다릅니다."),
+    INVALID_USER(705, false, "path variable로 조회한 유저와 로그인한 유저가 다릅니다."),
 
     // Token
     EMPTY_TOKEN(801, false, "accessToken이 없습니다."),
