@@ -48,7 +48,8 @@ public enum ErrorMessage {
     NOT_EXIST_COMMENT(1101, false, "해당 댓글이 존재하지 않습니다."),
 
     // Like
-    ALREADY_EXIST_BOARDLIKE(1201, false, "이미 해당 게시물에 좋아요를 눌렀습니다.");
+    ALREADY_EXIST_BOARDLIKE(1201, false, "이미 해당 게시물에 좋아요를 눌렀습니다."),
+    ALREADY_DELETED_BOARDLIKE(1202, false, "이미 해당 게시물에 좋아요 취소를 눌렀습니다.");
 
     private final int code;
     private final boolean isSuccess;
