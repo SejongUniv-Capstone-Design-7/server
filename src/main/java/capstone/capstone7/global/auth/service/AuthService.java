@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static capstone.capstone7.global.error.enums.ErrorMessage.DUPLICATED_USER;
 import static capstone.capstone7.global.error.enums.ErrorMessage.WRONG_REGION;
 
 @RequiredArgsConstructor
@@ -36,6 +37,10 @@ public class AuthService {
         Region regionEnum = Region.getRegionEnumByKrName(signUpRequestDto.getRegion());
         if (regionEnum == null){
             throw new AuthException(WRONG_REGION);
+        }
+
+        if(memberRepository.existsByEmail(signUpRequestDto.getEmail())){
+            throw new AuthException(DUPLICATED_USER);
         }
 
         Member newMember = Member.builder()
