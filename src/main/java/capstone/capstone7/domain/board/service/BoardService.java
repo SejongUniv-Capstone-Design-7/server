@@ -61,7 +61,9 @@ public class BoardService {
     public BoardUpdateResponseDto updateBoard(Member member, Long boardId, MultipartFile boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
 
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
-
+        if(board.getImage()!=null){
+            fileService.deleteFile(board.getImage());
+        }
         String savedFilePath = fileService.uploadFileToS3(boardImage, member.getId());
         board.boardContentUpdate(savedFilePath, boardUpdateRequestDto);
 
