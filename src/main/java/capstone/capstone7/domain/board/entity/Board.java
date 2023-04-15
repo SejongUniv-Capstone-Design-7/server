@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import static java.lang.Boolean.*;
+
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -41,12 +43,15 @@ public class Board extends BaseTimeEntity {
         this.tag = tag;
         this.image = image;
         this.likeNum = 0;
+        this.isSolved = FALSE;
         this.member = member;
     }
 
     public void boardContentUpdate(String boardImage, BoardUpdateRequestDto boardUpdateRequestDto){
         if(boardImage != null){
             this.image = boardImage;
+        }else{
+            this.image = null;
         }
 
         if(boardUpdateRequestDto.getTitle() != ""){
