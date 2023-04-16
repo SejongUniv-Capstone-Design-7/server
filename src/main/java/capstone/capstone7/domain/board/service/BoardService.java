@@ -9,6 +9,7 @@ import capstone.capstone7.domain.board.dto.response.BoardDeleteResponseDto;
 import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
 import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
 import capstone.capstone7.domain.board.entity.Board;
+import capstone.capstone7.domain.board.entity.enums.Tag;
 import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.global.S3.FileService;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
@@ -50,8 +51,9 @@ public class BoardService {
         return new BoardCreateResponseDto(newBoard.getId());
     }
 
-    public Slice<GetBoardResponseDto> getBoardsList(Pageable pageable){
-        Slice<Board> boardSlice = boardRepository.findBoardListBy(pageable);
+    public Slice<GetBoardResponseDto> getBoardsList(Tag tag, Pageable pageable){
+
+        Slice<Board> boardSlice = boardRepository.findBoardListBy(tag, pageable);
         Slice<GetBoardResponseDto> boardSliceDto = boardSlice.map(board -> {
             Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
             return new GetBoardResponseDto(board, member);
