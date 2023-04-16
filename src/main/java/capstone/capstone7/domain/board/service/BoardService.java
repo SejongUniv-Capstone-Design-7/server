@@ -1,6 +1,7 @@
 package capstone.capstone7.domain.board.service;
 
 import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.Member.repository.MemberRepository;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import static capstone.capstone7.global.error.enums.ErrorMessage.NOT_EXIST_BOARD;
+import static capstone.capstone7.global.error.enums.ErrorMessage.NOT_EXIST_USER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     private final FileService fileService;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public BoardCreateResponseDto createBoard(MultipartFile boardImage, BoardCreateRequestDto boardCreateRequestDto, Member member){
@@ -49,12 +52,17 @@ public class BoardService {
 
     public Slice<GetBoardResponseDto> getBoardsList(Pageable pageable){
         Slice<Board> boardSlice = boardRepository.findBoardListBy(pageable);
-        Slice<GetBoardResponseDto> boardSliceDto = boardSlice.map(GetBoardResponseDto::new);
+        Slice<GetBoardResponseDto> boardSliceDto = boardSlice.map(board -> {
+            Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
+            return new GetBoardResponseDto(board, member);
+        });
         return boardSliceDto;
     }
 
     public GetBoardResponseDto getBoard(Long boardId){
-        return new GetBoardResponseDto(boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD)));
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+        Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
+        return new GetBoardResponseDto(board, member);
     }
 
     @Transactional
