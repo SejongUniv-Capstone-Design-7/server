@@ -10,8 +10,15 @@ spring:
       #max-file-size: 50MB
       #max-request-size: 50MB
 
+# Encoding UTF-8
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+# 로깅 레벨 설정
 logging.level:
   org.hibernate.SQL: debug
 
 #spring.main.allow-bean-definition-overriding: true
-
