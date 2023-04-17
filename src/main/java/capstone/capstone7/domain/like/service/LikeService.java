@@ -50,7 +50,7 @@ public class LikeService {
 
     public BoardLikeDeleteResponseDto deleteLike(Long boardId, LoginUser loginUser){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(ErrorMessage.NOT_EXIST_BOARD));
-        board.addLike();
+        board.minusLike();
 
         Member member = memberRepository.findById(loginUser.getMember().getId()).orElseThrow(() -> new BusinessException(ErrorMessage.NOT_EXIST_USER));
 
