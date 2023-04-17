@@ -1,7 +1,7 @@
 package capstone.capstone7.domain.like.service;
 
-import capstone.capstone7.domain.Member.entity.Member;
-import capstone.capstone7.domain.Member.repository.MemberRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.like.dto.response.BoardLikeDeleteResponseDto;

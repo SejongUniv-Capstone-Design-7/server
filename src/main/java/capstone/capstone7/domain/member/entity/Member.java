@@ -1,6 +1,6 @@
-package capstone.capstone7.domain.Member.entity;
+package capstone.capstone7.domain.member.entity;
 
-import capstone.capstone7.domain.Member.entity.enums.Region;
+import capstone.capstone7.domain.member.entity.enums.Region;
 import capstone.capstone7.global.auth.entity.RefreshToken;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;

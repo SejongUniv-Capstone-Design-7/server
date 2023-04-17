@@ -1,4 +1,4 @@
-package capstone.capstone7.domain.Member.dto.request;
+package capstone.capstone7.domain.member.dto.request;
 
 import lombok.Getter;
 

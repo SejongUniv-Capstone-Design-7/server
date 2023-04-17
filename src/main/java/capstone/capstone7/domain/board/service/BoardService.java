@@ -1,7 +1,7 @@
 package capstone.capstone7.domain.board.service;
 
-import capstone.capstone7.domain.Member.entity.Member;
-import capstone.capstone7.domain.Member.repository.MemberRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
