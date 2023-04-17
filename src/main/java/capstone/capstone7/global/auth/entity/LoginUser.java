@@ -1,6 +1,6 @@
 package capstone.capstone7.global.auth.entity;
 
-import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.member.entity.Member;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

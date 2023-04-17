@@ -1,4 +1,4 @@
-package capstone.capstone7.domain.Member.dto.response;
+package capstone.capstone7.domain.member.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class MemberGetResponseDto {
-    private Long id;
+    private Long memberId;
 
     private String email;
     private String nickname;

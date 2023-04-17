@@ -1,6 +1,6 @@
 package capstone.capstone7.domain.board.dto.response;
 
-import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.domain.board.entity.Board;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

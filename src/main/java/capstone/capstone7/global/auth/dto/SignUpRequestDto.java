@@ -1,6 +1,5 @@
 package capstone.capstone7.global.auth.dto;
 
-import capstone.capstone7.domain.Member.entity.enums.Region;
 import lombok.Getter;
 
 @Getter
