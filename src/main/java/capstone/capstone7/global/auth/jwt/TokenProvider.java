@@ -31,7 +31,8 @@ public class TokenProvider {
     @Value("${spring.security.jwt.secret}")
     private String secretKey;
 
-    private long ACCESS_TOKEN_EXPIRE_TIME = Duration.ofMinutes(30).toMillis(); // 만료시간 30분
+    // private long ACCESS_TOKEN_EXPIRE_TIME = Duration.ofMinutes(30).toMillis(); // 만료시간 30분
+    private long ACCESS_TOKEN_EXPIRE_TIME = Duration.ofDays(14).toMillis(); // 만료시간 2주 - 테스트할 때 계속 재로그인 불편해서 일단 2주로 설정
 
     private long REFRESH_TOKEN_EXPIRE_TIME = Duration.ofDays(14).toMillis(); // 만료시간 2주
 

@@ -1,7 +1,7 @@
 package capstone.capstone7.domain.storage.entity;
 
 import capstone.capstone7.domain.board.entity.Board;
-import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

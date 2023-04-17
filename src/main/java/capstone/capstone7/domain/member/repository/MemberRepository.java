@@ -1,6 +1,6 @@
-package capstone.capstone7.domain.Member.repository;
+package capstone.capstone7.domain.member.repository;
 
-import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

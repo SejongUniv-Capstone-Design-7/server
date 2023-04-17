@@ -1,8 +1,8 @@
 package capstone.capstone7.global.auth.service;
 
-import capstone.capstone7.domain.Member.entity.Member;
-import capstone.capstone7.domain.Member.entity.enums.Region;
-import capstone.capstone7.domain.Member.repository.MemberRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.entity.enums.Region;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.auth.dto.LoginRequestDto;
 import capstone.capstone7.global.auth.dto.LoginResponseDto;
 import capstone.capstone7.global.auth.dto.SignUpRequestDto;

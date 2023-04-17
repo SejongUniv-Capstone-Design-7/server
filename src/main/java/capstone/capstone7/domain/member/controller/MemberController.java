@@ -1,10 +1,10 @@
-package capstone.capstone7.domain.Member.controller;
+package capstone.capstone7.domain.member.controller;
 
-import capstone.capstone7.domain.Member.dto.request.MemberPatchRequestDto;
-import capstone.capstone7.domain.Member.dto.response.MemberDeleteResponseDto;
-import capstone.capstone7.domain.Member.dto.response.MemberGetResponseDto;
-import capstone.capstone7.domain.Member.dto.response.MemberPatchResponseDto;
-import capstone.capstone7.domain.Member.service.MemberService;
+import capstone.capstone7.domain.member.dto.request.MemberPatchRequestDto;
+import capstone.capstone7.domain.member.dto.response.MemberDeleteResponseDto;
+import capstone.capstone7.domain.member.dto.response.MemberGetResponseDto;
+import capstone.capstone7.domain.member.dto.response.MemberPatchResponseDto;
+import capstone.capstone7.domain.member.service.MemberService;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.common.response.BaseResponseDto;
 import lombok.RequiredArgsConstructor;
