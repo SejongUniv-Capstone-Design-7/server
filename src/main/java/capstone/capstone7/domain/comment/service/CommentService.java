@@ -1,7 +1,7 @@
 package capstone.capstone7.domain.comment.service;
 
-import capstone.capstone7.domain.Member.entity.Member;
-import capstone.capstone7.domain.Member.repository.MemberRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static capstone.capstone7.global.error.enums.ErrorMessage.*;
 
@@ -71,8 +73,8 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public Slice<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
-        return commentRepository.findAllComment(boardId, pageable);
+    public List<CommentGetResponseDto> getAllComments(Long boardId){
+        return commentRepository.findAllComment(boardId);
     }
 
     public CommentDeleteResponseDto deleteComment(Long boardId, Long commentId, LoginUser loginUser) {

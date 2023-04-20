@@ -1,7 +1,7 @@
 package capstone.capstone7.global.auth.service;
 
-import capstone.capstone7.domain.Member.entity.Member;
-import capstone.capstone7.domain.Member.repository.MemberRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.error.exception.custom.AuthException;
 import lombok.RequiredArgsConstructor;

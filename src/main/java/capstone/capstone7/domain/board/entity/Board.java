@@ -1,6 +1,6 @@
 package capstone.capstone7.domain.board.entity;
 
-import capstone.capstone7.domain.Member.entity.Member;
+import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.entity.enums.Tag;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;

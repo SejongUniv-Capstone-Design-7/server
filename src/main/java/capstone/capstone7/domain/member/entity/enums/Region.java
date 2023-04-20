@@ -1,4 +1,4 @@
-package capstone.capstone7.domain.Member.entity.enums;
+package capstone.capstone7.domain.member.entity.enums;
 
 public enum Region {
 

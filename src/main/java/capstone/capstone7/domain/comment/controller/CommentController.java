@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/boards/{boardId}/comments")
@@ -35,8 +37,8 @@ public class CommentController {
     }
 
     @GetMapping("")
-    public SliceResponseDto<CommentGetResponseDto> getAllComments(@PathVariable Long boardId, Pageable pageable){
-        return new SliceResponseDto<>(commentService.getAllComments(boardId, pageable));
+    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId){
+        return new BaseResponseDto<>(commentService.getAllComments(boardId));
     }
 
     @DeleteMapping("/{commentId}")

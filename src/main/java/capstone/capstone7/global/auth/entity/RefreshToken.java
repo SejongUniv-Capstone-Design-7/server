@@ -1,6 +1,5 @@
 package capstone.capstone7.global.auth.entity;
 
-import capstone.capstone7.domain.Member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
