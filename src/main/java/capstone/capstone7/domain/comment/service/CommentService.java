@@ -21,6 +21,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static capstone.capstone7.global.error.enums.ErrorMessage.*;
 
 @Slf4j
@@ -71,8 +73,8 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public Slice<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
-        return commentRepository.findAllComment(boardId, pageable);
+    public List<CommentGetResponseDto> getAllComments(Long boardId){
+        return commentRepository.findAllComment(boardId);
     }
 
     public CommentDeleteResponseDto deleteComment(Long boardId, Long commentId, LoginUser loginUser) {
