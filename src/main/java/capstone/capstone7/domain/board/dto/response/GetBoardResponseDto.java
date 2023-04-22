@@ -23,7 +23,7 @@ public class GetBoardResponseDto {
     private Integer likeNum;
     private List<Long> likeMemberIds;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd' 'HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime modifiedDate;
+    private LocalDateTime createdDate;
 
     public GetBoardResponseDto(Board board, Member member, List<Long> likeMemberIds) {
         this.boardId = board.getId();
@@ -33,7 +33,7 @@ public class GetBoardResponseDto {
         this.image = board.getImage();
         this.isSolved = board.getIsSolved();
         this.memberId = board.getMember().getId();
-        this.modifiedDate = board.getModifiedDate();
+        this.createdDate = board.getCreatedDate();
         this.nickname = member.getNickname();
         this.likeNum = board.getLikeNum();
         this.likeMemberIds = likeMemberIds;

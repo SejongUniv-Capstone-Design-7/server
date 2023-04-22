@@ -38,7 +38,7 @@ public class CommentController {
     }
 
     @GetMapping("")
-    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId, @PageableDefault(sort="modifiedDate", direction = Sort.Direction.ASC)Pageable pageable){
+    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId, @PageableDefault(sort="createdDate", direction = Sort.Direction.ASC)Pageable pageable){
         return new BaseResponseDto<>(commentService.getAllComments(boardId, pageable));
     }
 

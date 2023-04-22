@@ -73,6 +73,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
+        boardRepository.findById(boardId).orElseThrow(() ->new BusinessException(NOT_EXIST_BOARD));
         return commentRepository.findAllComment(boardId, pageable);
     }
 
