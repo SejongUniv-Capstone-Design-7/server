@@ -34,13 +34,7 @@ public class BoardController {
     }
 
     @GetMapping()
-<<<<<<< Updated upstream
-    public SliceResponseDto<GetBoardListResponseDto> getBoardsList(@PageableDefault(sort="modifiedDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
-=======
-    public SliceResponseDto<GetBoardResponseDto> getBoardsList(@PageableDefault(sort="createdDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
-        log.info("tag {}", tag);
-
->>>>>>> Stashed changes
+    public SliceResponseDto<GetBoardListResponseDto> getBoardsList(@PageableDefault(sort="createdDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
         return new SliceResponseDto<>(boardService.getBoardsList(tag, pageable));
     }
 
