@@ -7,6 +7,7 @@ import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.entity.enums.Tag;
 import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.comment.repository.CommentRepository;
+import capstone.capstone7.domain.like.repository.LikeRepository;
 import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.S3.FileService;
@@ -33,6 +34,7 @@ public class BoardService {
     private final FileService fileService;
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public BoardCreateResponseDto createBoard(MultipartFile boardImage, BoardCreateRequestDto boardCreateRequestDto, Member member){
@@ -63,7 +65,7 @@ public class BoardService {
     public GetBoardResponseDto getBoard(Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
         Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
-        return new GetBoardResponseDto(board, member);
+        return new GetBoardResponseDto(board, member, likeRepository.findLikeMemberIdsByBoard(board));
     }
 
     @Transactional
