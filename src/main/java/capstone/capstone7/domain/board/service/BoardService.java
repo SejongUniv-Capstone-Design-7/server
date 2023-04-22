@@ -1,16 +1,14 @@
 package capstone.capstone7.domain.board.service;
 
-import capstone.capstone7.domain.member.entity.Member;
-import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
-import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
-import capstone.capstone7.domain.board.dto.response.BoardDeleteResponseDto;
-import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
-import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
+import capstone.capstone7.domain.board.dto.response.*;
 import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.entity.enums.Tag;
 import capstone.capstone7.domain.board.repository.BoardRepository;
+import capstone.capstone7.domain.comment.repository.CommentRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.S3.FileService;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +32,7 @@ public class BoardService {
 
     private final FileService fileService;
     private final MemberRepository memberRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public BoardCreateResponseDto createBoard(MultipartFile boardImage, BoardCreateRequestDto boardCreateRequestDto, Member member){
@@ -51,12 +50,12 @@ public class BoardService {
         return new BoardCreateResponseDto(newBoard.getId());
     }
 
-    public Slice<GetBoardResponseDto> getBoardsList(Tag tag, Pageable pageable){
+    public Slice<GetBoardListResponseDto> getBoardsList(Tag tag, Pageable pageable){
 
         Slice<Board> boardSlice = boardRepository.findBoardListBy(tag, pageable);
-        Slice<GetBoardResponseDto> boardSliceDto = boardSlice.map(board -> {
+        Slice<GetBoardListResponseDto> boardSliceDto = boardSlice.map(board -> {
             Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
-            return new GetBoardResponseDto(board, member);
+            return new GetBoardListResponseDto(board, member, commentRepository.countByBoard(board));
         });
         return boardSliceDto;
     }
