@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query(value = "select new capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto(c.id, c.content, m.id, m.nickname, c.modifiedDate) " +
+    @Query(value = "select new capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto(c.id, c.content, m.id, m.nickname, c.createdDate) " +
             "from Comment c join c.member m " +
             "where c.board.id = :boardId ")
     List<CommentGetResponseDto> findAllComment(@Param("boardId") Long boardId, Pageable pageable);
