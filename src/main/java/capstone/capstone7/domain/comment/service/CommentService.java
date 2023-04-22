@@ -1,7 +1,5 @@
 package capstone.capstone7.domain.comment.service;
 
-import capstone.capstone7.domain.member.entity.Member;
-import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.domain.board.entity.Board;
 import capstone.capstone7.domain.board.repository.BoardRepository;
 import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
@@ -12,12 +10,13 @@ import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.entity.Comment;
 import capstone.capstone7.domain.comment.repository.CommentRepository;
+import capstone.capstone7.domain.member.entity.Member;
+import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,8 +72,8 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<CommentGetResponseDto> getAllComments(Long boardId){
-        return commentRepository.findAllComment(boardId);
+    public List<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
+        return commentRepository.findAllComment(boardId, pageable);
     }
 
     public CommentDeleteResponseDto deleteComment(Long boardId, Long commentId, LoginUser loginUser) {
