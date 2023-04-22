@@ -2,10 +2,7 @@ package capstone.capstone7.domain.board.controller;
 
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
-import capstone.capstone7.domain.board.dto.response.BoardCreateResponseDto;
-import capstone.capstone7.domain.board.dto.response.BoardDeleteResponseDto;
-import capstone.capstone7.domain.board.dto.response.BoardUpdateResponseDto;
-import capstone.capstone7.domain.board.dto.response.GetBoardResponseDto;
+import capstone.capstone7.domain.board.dto.response.*;
 import capstone.capstone7.domain.board.entity.enums.Tag;
 import capstone.capstone7.domain.board.service.BoardService;
 import capstone.capstone7.global.auth.entity.LoginUser;
@@ -37,9 +34,7 @@ public class BoardController {
     }
 
     @GetMapping()
-    public SliceResponseDto<GetBoardResponseDto> getBoardsList(@PageableDefault(sort="modifiedDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
-        log.info("tag {}", tag);
-
+    public SliceResponseDto<GetBoardListResponseDto> getBoardsList(@PageableDefault(sort="modifiedDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
         return new SliceResponseDto<>(boardService.getBoardsList(tag, pageable));
     }
 
