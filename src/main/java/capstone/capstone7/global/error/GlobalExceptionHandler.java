@@ -7,6 +7,7 @@ import capstone.capstone7.global.error.exception.custom.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -37,5 +38,12 @@ public class GlobalExceptionHandler {
     public BaseResponseDto<ErrorMessage> badCredentialsExceptionHandle(BadCredentialsException e) {
         log.warn("badCredentialsException : {}", e);
         return new BaseResponseDto(ErrorMessage.WRONG_PASSWORD);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public BaseResponseDto<ErrorMessage> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
+        String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        log.warn("methodArgumentNotValidException : {}", errorMessage);
+        return new BaseResponseDto(1301, false, errorMessage);
     }
 }
