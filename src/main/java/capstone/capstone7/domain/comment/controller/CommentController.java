@@ -9,10 +9,11 @@ import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.service.CommentService;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.common.response.BaseResponseDto;
-import capstone.capstone7.global.common.response.SliceResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,8 @@ public class CommentController {
     }
 
     @GetMapping("")
-    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId){
-        return new BaseResponseDto<>(commentService.getAllComments(boardId));
+    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId, @PageableDefault(sort="modifiedDate", direction = Sort.Direction.DESC)Pageable pageable){
+        return new BaseResponseDto<>(commentService.getAllComments(boardId, pageable));
     }
 
     @DeleteMapping("/{commentId}")
