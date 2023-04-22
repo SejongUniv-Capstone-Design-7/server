@@ -3,17 +3,15 @@ package capstone.capstone7.global.auth.service;
 import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.domain.member.entity.enums.Region;
 import capstone.capstone7.domain.member.repository.MemberRepository;
-import capstone.capstone7.global.auth.dto.LoginRequestDto;
-import capstone.capstone7.global.auth.dto.LoginResponseDto;
-import capstone.capstone7.global.auth.dto.SignUpRequestDto;
-import capstone.capstone7.global.auth.dto.SignUpResponseDto;
+import capstone.capstone7.global.auth.dto.request.LoginRequestDto;
+import capstone.capstone7.global.auth.dto.request.SignUpRequestDto;
+import capstone.capstone7.global.auth.dto.response.LoginResponseDto;
+import capstone.capstone7.global.auth.dto.response.SignUpResponseDto;
 import capstone.capstone7.global.auth.entity.TokenInfo;
 import capstone.capstone7.global.auth.jwt.TokenProvider;
 import capstone.capstone7.global.error.exception.custom.AuthException;
-
 import capstone.capstone7.global.error.exception.custom.BusinessException;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
