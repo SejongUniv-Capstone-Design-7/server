@@ -1,4 +1,4 @@
-package capstone.capstone7.global.auth.dto;
+package capstone.capstone7.global.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

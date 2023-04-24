@@ -1,4 +1,4 @@
-package capstone.capstone7.global.auth.dto;
+package capstone.capstone7.global.auth.dto.response;
 
 import capstone.capstone7.global.auth.entity.TokenInfo;
 import lombok.AllArgsConstructor;
