@@ -17,7 +17,7 @@ public class SignUpRequestDto {
     @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z가-힣]$",
+    @Pattern(regexp = "^[a-zA-Z가-힣]+$",
             message = "닉네임는 한글과 영어만 사용가능합니다.")
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     @Size(min=4, max=8, message = "4자 ~ 8자의 닉네임이어야 합니다.")
