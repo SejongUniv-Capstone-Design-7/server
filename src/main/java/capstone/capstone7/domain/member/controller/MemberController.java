@@ -9,6 +9,7 @@ import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.common.response.BaseResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class MemberController {
     }
 
     @PatchMapping("")
-    public BaseResponseDto<MemberPatchResponseDto> updateMember(@PathVariable Long memberId, @RequestBody MemberPatchRequestDto memberPatchRequestDto, @AuthenticationPrincipal LoginUser loginUser){
+    public BaseResponseDto<MemberPatchResponseDto> updateMember(@PathVariable Long memberId, @Validated @RequestBody MemberPatchRequestDto memberPatchRequestDto, @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(memberService.updateMember(memberId, memberPatchRequestDto, loginUser));
     }
 

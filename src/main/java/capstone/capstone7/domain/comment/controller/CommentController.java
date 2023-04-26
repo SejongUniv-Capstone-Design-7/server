@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +29,12 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("")
-    public BaseResponseDto<CommentCreateResponseDto> createComment(@PathVariable Long boardId, @RequestBody CommentCreateRequestDto commentCreateRequestDto, @AuthenticationPrincipal LoginUser loginUser){
+    public BaseResponseDto<CommentCreateResponseDto> createComment(@PathVariable Long boardId, @Validated @RequestBody CommentCreateRequestDto commentCreateRequestDto, @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(commentService.createComment(boardId, commentCreateRequestDto, loginUser));
     }
 
     @PatchMapping("/{commentId}")
-    public BaseResponseDto<CommentPatchResponseDto> createComment(@PathVariable Long boardId, @RequestBody CommentPatchRequestDto commentPatchRequestDto, @PathVariable Long commentId, @AuthenticationPrincipal LoginUser loginUser){
+    public BaseResponseDto<CommentPatchResponseDto> createComment(@PathVariable Long boardId, @Validated @RequestBody CommentPatchRequestDto commentPatchRequestDto, @PathVariable Long commentId, @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(commentService.updateComment(boardId, commentPatchRequestDto, commentId, loginUser));
     }
 
