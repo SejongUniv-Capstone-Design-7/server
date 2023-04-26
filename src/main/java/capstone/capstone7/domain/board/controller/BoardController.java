@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,7 @@ public class BoardController {
     @PostMapping(value = "",
             consumes = {MediaType.APPLICATION_JSON_VALUE,
                     MediaType.MULTIPART_FORM_DATA_VALUE})
-    public BaseResponseDto<BoardCreateResponseDto> createBoard(@RequestPart(value = "request") BoardCreateRequestDto boardCreateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage, @AuthenticationPrincipal LoginUser loginUser){
+    public BaseResponseDto<BoardCreateResponseDto> createBoard(@Validated @RequestPart(value = "request") BoardCreateRequestDto boardCreateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage, @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(boardService.createBoard(boardImage, boardCreateRequestDto, loginUser.getMember()));
     }
 
@@ -46,7 +47,7 @@ public class BoardController {
     @PatchMapping(value = "/{boardId}",
             consumes = {MediaType.APPLICATION_JSON_VALUE,
                     MediaType.MULTIPART_FORM_DATA_VALUE})
-    public BaseResponseDto<BoardUpdateResponseDto> updateBoard(@PathVariable Long boardId, @RequestPart(value = "request") BoardUpdateRequestDto boardUpdateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage,  @AuthenticationPrincipal LoginUser loginUser){
+    public BaseResponseDto<BoardUpdateResponseDto> updateBoard(@PathVariable Long boardId, @Validated @RequestPart(value = "request") BoardUpdateRequestDto boardUpdateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage,  @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(boardService.updateBoard(loginUser.getMember(), boardId, boardImage, boardUpdateRequestDto));
     }
 
