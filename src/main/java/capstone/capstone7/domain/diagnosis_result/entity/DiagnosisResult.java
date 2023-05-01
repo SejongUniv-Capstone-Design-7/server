@@ -5,6 +5,7 @@ import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,4 +20,10 @@ public class DiagnosisResult extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public DiagnosisResult(DiseaseName diseaseName, Member member) {
+        this.diseaseName = diseaseName;
+        this.member = member;
+    }
 }
