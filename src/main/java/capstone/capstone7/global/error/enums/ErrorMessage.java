@@ -49,7 +49,11 @@ public enum ErrorMessage {
 
     // Like
     ALREADY_EXIST_BOARDLIKE(1201, false, "이미 해당 게시물에 좋아요를 눌렀습니다."),
-    ALREADY_DELETED_BOARDLIKE(1202, false, "이미 해당 게시물에 좋아요 취소를 눌렀습니다.");
+    ALREADY_DELETED_BOARDLIKE(1202, false, "이미 해당 게시물에 좋아요 취소를 눌렀습니다."),
+
+    // Send Data to AI Server
+    FAIL_TO_SEND_AISERVER(1401, false, "AI 서버로 데이터를 전송하는 데 실패하였습니다."),
+    EMPTY_FILE(1402, false, "이미지 파일을 첨부하지 않았습니다.");
 
     private final int code;
     private final boolean isSuccess;

@@ -1,24 +1,21 @@
 package capstone.capstone7.global.S3;
 
 
-import capstone.capstone7.global.error.exception.custom.BusinessException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-
-import static capstone.capstone7.global.error.enums.ErrorMessage.CANNOT_UPLOAD;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -59,11 +56,18 @@ public class FileService {
         }
     }*/
 
-    // 병해충 진단 사진 AI 서버로 보내기
-    public void sendFileToAIServer(MultipartFile file, String crop_sort){
-        if(file != null){
-            String fileName = getDiagnosisFileName(file, crop_sort);
+
+    public File convertFromMultipartToFile(MultipartFile multipartFile) throws IOException {
+        if(multipartFile.isEmpty()){
+            return null;
         }
+        File convFile = new File(multipartFile.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+
+        return convFile;
     }
 
     // S3에 파일 업로드
@@ -97,9 +101,10 @@ public class FileService {
     }
 
     // 병해충 진단에 사용되는 파일명 생성
-    private String getDiagnosisFileName(MultipartFile multipartFile, String crop_sort) {
-        return String.format("%s-%s-%s",
-                crop_sort, getRandomUUID(), multipartFile.getOriginalFilename());
+    public String getDiagnosisFileNameSendToAIServer(String crop_sort) {
+        DateTimeFormatter currentTime = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        return String.format("%s_%s_%s",
+                crop_sort, currentTime, getRandomUUID());
     }
 
     // S3에 저장되는 파일명 생성
