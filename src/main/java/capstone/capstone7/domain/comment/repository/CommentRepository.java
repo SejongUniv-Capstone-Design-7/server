@@ -17,4 +17,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<CommentGetResponseDto> findAllComment(@Param("boardId") Long boardId, Pageable pageable);
 
     Integer countByBoard(Board board);
+
+    List<Comment> findAllCommentByBoard(Board board);
 }
