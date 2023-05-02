@@ -32,7 +32,6 @@ public class DiagnosisResultService {
     private WebClient webClient;
     @PostConstruct
     public void initWebClient() {
-        //webClient = WebClient.create("https://jsonplaceholder.typicode.com");
         webClient = WebClient.create("http://61.255.206.114:5000");
     }
 
@@ -80,15 +79,6 @@ public class DiagnosisResultService {
 
     }
 
-    public String test(){
-        String block = webClient.get()
-                .uri("/test")
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnError(e -> log.error("Mapping Error : ", e))
-                .block();
-        return block;
-    }
 
 
 }

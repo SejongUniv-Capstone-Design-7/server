@@ -6,7 +6,10 @@ import capstone.capstone7.domain.diagnosis_result.service.DiagnosisResultService
 import capstone.capstone7.global.common.response.BaseResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
@@ -20,11 +23,4 @@ public class DiagnosisResultController {
     public BaseResponseDto<DiagnosisResultFromAIServer> diagnosis(@RequestPart(value = "request") DiagnosisRequestDto diagnosisRequestDto, @RequestParam(value = "file") MultipartFile multipartFile){
         return new BaseResponseDto<>(diagnosisResultService.diagnosis(multipartFile, diagnosisRequestDto));
     }
-
-    @GetMapping(value = "/test")
-    public String test(){
-        return diagnosisResultService.test();
-    }
-
-
 }
