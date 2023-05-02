@@ -7,6 +7,7 @@ import capstone.capstone7.global.error.exception.custom.BusinessException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
@@ -30,10 +31,14 @@ import static capstone.capstone7.global.error.enums.ErrorMessage.FAIL_TO_SEND_AI
 public class DiagnosisResultService {
     private final FileService fileService;
     private WebClient webClient;
+
+    @Value("${ai-server:url}")
+    private String aiServerUrl;
     @PostConstruct
     public void initWebClient() {
         //webClient = WebClient.create("https://jsonplaceholder.typicode.com");
-        webClient = WebClient.create("http://61.255.206.114:5000");
+        webClient = WebClient.create(aiServerUrl);
+        log.info(aiServerUrl);
     }
 
     public DiagnosisResultFromAIServer diagnosis(MultipartFile cropImage, DiagnosisRequestDto diagnosisRequestDto){
