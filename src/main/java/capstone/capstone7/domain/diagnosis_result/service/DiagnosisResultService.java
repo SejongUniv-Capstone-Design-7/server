@@ -38,7 +38,6 @@ public class DiagnosisResultService {
     public void initWebClient() {
         //webClient = WebClient.create("https://jsonplaceholder.typicode.com");
         webClient = WebClient.create(aiServerUrl);
-        log.info(aiServerUrl);
     }
 
     public DiagnosisResultFromAIServer diagnosis(MultipartFile cropImage, DiagnosisRequestDto diagnosisRequestDto){
@@ -54,6 +53,8 @@ public class DiagnosisResultService {
             String fileName = fileService.getDiagnosisFileNameSendToAIServer(diagnosisRequestDto.getCrop_sort());
             log.info("filename : {}", fileName);
 
+            return null;
+            /*
             multipartBodyBuilder.part("crop_image", new InputStreamResource(new FileInputStream(crop_image_file))).filename(fileName);
             multipartBodyBuilder.part("crop_sort", diagnosisRequestDto.getCrop_sort());
 
@@ -67,14 +68,14 @@ public class DiagnosisResultService {
                     .bodyToMono(DiagnosisResultFromAIServer.class)
                     .doOnError(e -> log.error("Mapping Error : ", e))
                     .block();
-
+*/
             // 받아온 정보로 diagnosis Result에 저장
             /*DiagnosisResult.builder()
                     .member()
                     .diseaseName()
                     .build();*/
 
-            return diagnosisResultFromAIServer;
+            //return diagnosisResultFromAIServer;
         }catch (IOException e){
             throw new BusinessException(FAIL_TO_SEND_AISERVER);
         }
