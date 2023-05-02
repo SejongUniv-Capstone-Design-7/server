@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -102,9 +103,10 @@ public class FileService {
 
     // 병해충 진단에 사용되는 파일명 생성
     public String getDiagnosisFileNameSendToAIServer(String crop_sort) {
+        LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter currentTime = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         return String.format("%s_%s_%s",
-                crop_sort, currentTime, getRandomUUID());
+                crop_sort, now.format(currentTime), getRandomUUID());
     }
 
     // S3에 저장되는 파일명 생성
