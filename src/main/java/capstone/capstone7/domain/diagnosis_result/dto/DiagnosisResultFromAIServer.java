@@ -1,8 +1,9 @@
 package capstone.capstone7.domain.diagnosis_result.dto;
 
+import java.util.List;
+
 public class DiagnosisResultFromAIServer {
-    private Integer result;
-    private String input_crop;
-    private String output_crop;
-    private Diagnosis diagnosis;
+    private Integer class_idx;
+    private List<Double> proba;
+    private String info;
 }
