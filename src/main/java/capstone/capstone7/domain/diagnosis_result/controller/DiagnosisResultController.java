@@ -1,7 +1,7 @@
 package capstone.capstone7.domain.diagnosis_result.controller;
 
 import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisRequestDto;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResponseDto;
+import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultFromAIServer;
 import capstone.capstone7.domain.diagnosis_result.service.DiagnosisResultService;
 import capstone.capstone7.global.common.response.BaseResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,14 @@ public class DiagnosisResultController {
     @PostMapping(value = "/diagnosis",
             consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
-    public BaseResponseDto<DiagnosisResponseDto> diagnosis(@RequestPart(value = "request") DiagnosisRequestDto diagnosisRequestDto, @RequestParam(value = "file") MultipartFile multipartFile){
+    public BaseResponseDto<DiagnosisResultFromAIServer> diagnosis(@RequestPart(value = "request") DiagnosisRequestDto diagnosisRequestDto, @RequestParam(value = "file") MultipartFile multipartFile){
         return new BaseResponseDto<>(diagnosisResultService.diagnosis(multipartFile, diagnosisRequestDto));
     }
+
+    @GetMapping(value = "/test")
+    public String test(){
+        return diagnosisResultService.test();
+    }
+
+
 }

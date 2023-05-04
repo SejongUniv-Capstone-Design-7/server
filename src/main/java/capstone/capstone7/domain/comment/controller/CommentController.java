@@ -4,7 +4,7 @@ import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
 import capstone.capstone7.domain.comment.dto.request.CommentPatchRequestDto;
 import capstone.capstone7.domain.comment.dto.response.CommentCreateResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentDeleteResponseDto;
-import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
+import capstone.capstone7.domain.comment.dto.response.ParentCommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.service.CommentService;
 import capstone.capstone7.global.auth.entity.LoginUser;
@@ -39,7 +39,7 @@ public class CommentController {
     }
 
     @GetMapping("")
-    public BaseResponseDto<List<CommentGetResponseDto>> getAllComments(@PathVariable Long boardId, @PageableDefault(sort="createdDate", direction = Sort.Direction.ASC)Pageable pageable){
+    public BaseResponseDto<List<ParentCommentGetResponseDto>> getAllComments(@PathVariable Long boardId, @PageableDefault(sort="createdDate", direction = Sort.Direction.ASC)Pageable pageable){
         return new BaseResponseDto<>(commentService.getAllComments(boardId, pageable));
     }
 

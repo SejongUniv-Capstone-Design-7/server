@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthException.class)
     public BaseResponseDto<ErrorMessage> authExceptionHandle(AuthException e) {
-        log.warn("authException : {}", e);
+        log.warn("authException : {}", e.getErrorMessage());
         return new BaseResponseDto(e.getErrorMessage());
     }
 

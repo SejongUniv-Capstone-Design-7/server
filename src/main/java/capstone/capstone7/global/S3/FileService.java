@@ -3,19 +3,20 @@ package capstone.capstone7.global.S3;
 
 import capstone.capstone7.global.error.exception.custom.BusinessException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import static capstone.capstone7.global.error.enums.ErrorMessage.CANNOT_UPLOAD;
@@ -33,13 +34,14 @@ public class FileService {
     @Value("${cloud.aws.s3.bucket.url}")
     private String defaultS3Url;
 
-//    @Value("${file.local-path}")
-//    private String defaultLocalPath;
+   // @Value("${file.local-path}")
+   // private String defaultLocalPath;
 
     // 병해충 진단 사진 로컬에 저장
-/*    public void uploadFileToLocal(MultipartFile file, String crop_sort) {
+    /*
+    public void uploadFileToLocal(MultipartFile file, String crop_sort) {
         if(file != null){
-            String fileUrl = defaultLocalPath + File.separator + getDiagnosisFileName(file, crop_sort);
+            String fileUrl = defaultLocalPath + File.separator + getDiagnosisFileNameSendToAIServer(file, crop_sort);
 
             // 사진을 저장할 폴더가 생성되어있는지 확인하고, 생성되어있지 않다면 폴더 생성
             // 아래에서 사진 저장시, 사진을 저장할 폴더가 생성되어있지 않다면 IOException 발생
@@ -57,14 +59,31 @@ public class FileService {
                 throw new BusinessException(CANNOT_UPLOAD);
             }
         }
-    }*/
+    }
+     */
 
-    // 병해충 진단 사진 AI 서버로 보내기
-    public void sendFileToAIServer(MultipartFile file, String crop_sort){
-        if(file != null){
-            String fileName = getDiagnosisFileName(file, crop_sort);
+/*
+    public File convertFromMultipartToFile(MultipartFile multipartFile) throws IOException {
+        if(multipartFile.isEmpty()){
+            return null;
+        }
+        File convFile = new File(multipartFile.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+
+        return convFile;
+    }
+
+    private void removeNewFile(File targetFile) {
+        if(targetFile.delete()) {
+            log.info("파일이 삭제되었습니다.");
+        }else {
+            log.info("파일이 삭제되지 못했습니다.");
         }
     }
+*/
 
     // S3에 파일 업로드
     public String uploadFileToS3(MultipartFile multipartFile, Long userId) {
@@ -86,10 +105,6 @@ public class FileService {
         return getResourceUrl(savedFileName); // S3에 저장된 사진의 Url 반환
     }
 
-    public String getDefaultRandomProfileImageUrl() {
-        return String.format("%s/%s/%s.png", defaultS3Url, "profileImage", (int)(Math.random() * 3 + 1));
-    }
-
     // S3에서 파일 삭제
     public void deleteFile(String fileUrl) {
         String fileName = getFileNameFromResourceUrl(fileUrl);
@@ -97,9 +112,11 @@ public class FileService {
     }
 
     // 병해충 진단에 사용되는 파일명 생성
-    private String getDiagnosisFileName(MultipartFile multipartFile, String crop_sort) {
-        return String.format("%s-%s-%s",
-                crop_sort, getRandomUUID(), multipartFile.getOriginalFilename());
+    public String getDiagnosisFileNameSendToAIServer(MultipartFile file, String crop_sort) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter currentTime = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        return String.format("%s_%s_%s.%s",
+                crop_sort, now.format(currentTime), getRandomUUID(), getExtension(file));
     }
 
     // S3에 저장되는 파일명 생성
