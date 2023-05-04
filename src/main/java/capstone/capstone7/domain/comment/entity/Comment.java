@@ -17,6 +17,8 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long parentId;
+
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,5 +39,10 @@ public class Comment extends BaseTimeEntity {
     public Long updateComment(String newContent){
         this.content = newContent;
         return this.id;
+    }
+
+    public Long updateParentId(Long parentId){
+        this.parentId = parentId;
+        return this.parentId;
     }
 }

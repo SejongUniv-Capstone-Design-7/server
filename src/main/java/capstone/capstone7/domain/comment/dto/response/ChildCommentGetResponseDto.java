@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class CommentGetResponseDto {
+public class ChildCommentGetResponseDto {
     private Long commentId;
+    private Long parentId;
     private String content;
 
     private Long memberId;
