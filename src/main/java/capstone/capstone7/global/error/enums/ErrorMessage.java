@@ -46,6 +46,7 @@ public enum ErrorMessage {
 
     // Commnet
     NOT_EXIST_COMMENT(1101, false, "해당 댓글이 존재하지 않습니다."),
+    NOT_EXIST_PARENT_COMMENT(1101, false, "해당 부모 댓글이 존재하지 않습니다."),
 
     // Like
     ALREADY_EXIST_BOARDLIKE(1201, false, "이미 해당 게시물에 좋아요를 눌렀습니다."),

@@ -76,4 +76,8 @@ public class Board extends BaseTimeEntity {
         this.likeNum -= 1;
         return this.likeNum;
     }
+
+    public void boardSolvedUpdate(Boolean isSolved){
+        this.isSolved = isSolved;
+    }
 }

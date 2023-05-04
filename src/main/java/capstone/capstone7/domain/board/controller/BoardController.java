@@ -1,6 +1,7 @@
 package capstone.capstone7.domain.board.controller;
 
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
+import capstone.capstone7.domain.board.dto.request.BoardSolvedUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.*;
 import capstone.capstone7.domain.board.entity.enums.Tag;
@@ -49,6 +50,13 @@ public class BoardController {
                     MediaType.MULTIPART_FORM_DATA_VALUE})
     public BaseResponseDto<BoardUpdateResponseDto> updateBoard(@PathVariable Long boardId, @Validated @RequestPart(value = "request") BoardUpdateRequestDto boardUpdateRequestDto, @RequestParam(value = "file", required = false) MultipartFile boardImage,  @AuthenticationPrincipal LoginUser loginUser){
         return new BaseResponseDto<>(boardService.updateBoard(loginUser.getMember(), boardId, boardImage, boardUpdateRequestDto));
+    }
+
+    @PatchMapping(value = "/{boardId}/solved",
+            consumes = {MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.MULTIPART_FORM_DATA_VALUE})
+    public BaseResponseDto<BoardSolvedUpdateResponseDto> updateBoardSolved(@PathVariable Long boardId, @Validated @RequestBody BoardSolvedUpdateRequestDto boardSolvedUpdateRequestDto, @AuthenticationPrincipal LoginUser loginUser){
+        return new BaseResponseDto<>(boardService.updateBoardSolved(boardId, boardSolvedUpdateRequestDto));
     }
 
     @DeleteMapping("/{boardId}")

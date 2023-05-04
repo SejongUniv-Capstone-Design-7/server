@@ -6,7 +6,7 @@ import capstone.capstone7.domain.comment.dto.request.CommentCreateRequestDto;
 import capstone.capstone7.domain.comment.dto.request.CommentPatchRequestDto;
 import capstone.capstone7.domain.comment.dto.response.CommentCreateResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentDeleteResponseDto;
-import capstone.capstone7.domain.comment.dto.response.CommentGetResponseDto;
+import capstone.capstone7.domain.comment.dto.response.ParentCommentGetResponseDto;
 import capstone.capstone7.domain.comment.dto.response.CommentPatchResponseDto;
 import capstone.capstone7.domain.comment.entity.Comment;
 import capstone.capstone7.domain.comment.repository.CommentRepository;
@@ -44,6 +44,14 @@ public class CommentService {
                 .member(member)
                 .build();
 
+        if(commentCreateRequestDto.getParentId() != null){
+            System.out.println(commentRepository.existsByParentId(commentCreateRequestDto.getParentId()));
+            if(!commentRepository.existsByParentId(commentCreateRequestDto.getParentId())){
+                throw new BusinessException(NOT_EXIST_PARENT_COMMENT);
+            }
+            newComment.updateParentId(commentCreateRequestDto.getParentId());
+        }
+
         commentRepository.save(newComment);
 
         return new CommentCreateResponseDto(newComment.getId());
@@ -72,9 +80,13 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<CommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
+    public List<ParentCommentGetResponseDto> getAllComments(Long boardId, Pageable pageable){
         boardRepository.findById(boardId).orElseThrow(() ->new BusinessException(NOT_EXIST_BOARD));
-        return commentRepository.findAllComment(boardId, pageable);
+        List<ParentCommentGetResponseDto> allParentComment = commentRepository.findAllParentComment(boardId, pageable);
+        for (ParentCommentGetResponseDto parentCommentGetResponseDto : allParentComment) {
+            parentCommentGetResponseDto.updateChildComments(commentRepository.findAllChildComment(boardId, parentCommentGetResponseDto.getCommentId(), pageable));
+        }
+        return allParentComment;
     }
 
     public CommentDeleteResponseDto deleteComment(Long boardId, Long commentId, LoginUser loginUser) {
