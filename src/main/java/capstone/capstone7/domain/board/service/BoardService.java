@@ -1,6 +1,7 @@
 package capstone.capstone7.domain.board.service;
 
 import capstone.capstone7.domain.board.dto.request.BoardCreateRequestDto;
+import capstone.capstone7.domain.board.dto.request.BoardSolvedUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.request.BoardUpdateRequestDto;
 import capstone.capstone7.domain.board.dto.response.*;
 import capstone.capstone7.domain.board.entity.Board;
@@ -82,6 +83,13 @@ public class BoardService {
     }
 
     @Transactional
+    public BoardSolvedUpdateResponseDto updateBoardSolved(Long boardId, BoardSolvedUpdateRequestDto boardSolvedUpdateRequestDto) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
+        board.boardSolvedUpdate(boardSolvedUpdateRequestDto.getIsSolved());
+        return new BoardSolvedUpdateResponseDto(board.getId());
+    }
+
+    @Transactional
     public BoardDeleteResponseDto deleteBoard(Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
         if (board.getImage() != null){
@@ -93,4 +101,6 @@ public class BoardService {
         boardRepository.deleteById(boardId); // 해당 boardId를 가진 Board가 없다면, delete 요청 무시
         return new BoardDeleteResponseDto(boardId);
     }
+
+
 }
