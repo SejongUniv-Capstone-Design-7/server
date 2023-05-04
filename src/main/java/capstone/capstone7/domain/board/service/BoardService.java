@@ -87,6 +87,9 @@ public class BoardService {
         if (board.getImage() != null){
             fileService.deleteFile(board.getImage());
         }
+
+        likeRepository.deleteAllInBatch(likeRepository.findAllLikeByBoard(board));
+        commentRepository.deleteAllInBatch(commentRepository.findAllCommentByBoard(board));
         boardRepository.deleteById(boardId); // 해당 boardId를 가진 Board가 없다면, delete 요청 무시
         return new BoardDeleteResponseDto(boardId);
     }

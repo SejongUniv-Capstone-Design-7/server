@@ -16,4 +16,6 @@ public interface LikeRepository extends JpaRepository<BoardLike, Long> {
 
     @Query("select l.member.id from BoardLike l where l.board = :board")
     List<Long> findLikeMemberIdsByBoard(@Param("board") Board board);
+
+    List<BoardLike> findAllLikeByBoard(Board board);
 }

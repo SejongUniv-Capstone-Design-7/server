@@ -6,4 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class DiagnosisResponseDto {
+    private Integer result;
+    private String input_crop;
+    private String output_crop;
+
 }
