@@ -1,6 +1,7 @@
 package capstone.capstone7.domain.diagnosis_result.service;
 
 import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisRequestDto;
+import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisRequestToAIServer;
 import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultFromAIServer;
 import capstone.capstone7.global.S3.FileService;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
@@ -45,7 +46,7 @@ public class DiagnosisResultService {
 
         MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
         multipartBodyBuilder.part("image", cropImage).filename(fileName);
-        multipartBodyBuilder.part("crop_sort", diagnosisRequestDto.getCrop_sort());
+        multipartBodyBuilder.part("crop_sort", new DiagnosisRequestToAIServer(diagnosisRequestDto.getCrop_sort()));
 
         DiagnosisResultFromAIServer diagnosisResultFromAIServer = webClient.post()
                 .uri("/model")
