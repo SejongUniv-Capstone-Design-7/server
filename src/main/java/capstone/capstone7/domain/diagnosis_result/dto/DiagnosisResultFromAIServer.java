@@ -10,5 +10,5 @@ public class DiagnosisResultFromAIServer {
     private String disease_name;
     private String in_info;
     private String out_info;
-    private List<Double> class_prob_list;
+    private List<Float> class_prob_list;
 }
