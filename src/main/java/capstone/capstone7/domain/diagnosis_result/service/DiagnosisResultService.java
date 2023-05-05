@@ -46,7 +46,7 @@ public class DiagnosisResultService {
 
         MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
         multipartBodyBuilder.part("image", cropImage.getResource()).filename(fileName);
-        multipartBodyBuilder.part("crop_sort", new DiagnosisRequestToAIServer(diagnosisRequestDto.getCrop_sort()));
+        multipartBodyBuilder.part("crop_sort", diagnosisRequestDto.getCrop_sort());
 
         DiagnosisResultFromAIServer diagnosisResultFromAIServer = webClient.post()
                 .uri("/model")
