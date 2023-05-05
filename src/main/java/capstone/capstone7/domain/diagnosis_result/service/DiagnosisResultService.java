@@ -44,7 +44,7 @@ public class DiagnosisResultService {
         log.info("filename : {}", fileName);
 
         MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
-        multipartBodyBuilder.part("crop_image", cropImage).filename(fileName);
+        multipartBodyBuilder.part("image", cropImage).filename(fileName);
         multipartBodyBuilder.part("crop_sort", diagnosisRequestDto.getCrop_sort());
 
         DiagnosisResultFromAIServer diagnosisResultFromAIServer = webClient.post()
