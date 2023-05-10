@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import static capstone.capstone7.global.error.enums.ErrorMessage.NOT_EXIST_BOARD;
 import static capstone.capstone7.global.error.enums.ErrorMessage.NOT_EXIST_USER;
 
@@ -55,7 +58,7 @@ public class BoardService {
 
     public Slice<GetBoardListResponseDto> getBoardsList(Tag tag, Pageable pageable){
 
-        Slice<Board> boardSlice = boardRepository.findBoardListBy(tag, pageable);
+        Slice<Board> boardSlice = boardRepository.findBoardListByTag(tag, pageable);
         Slice<GetBoardListResponseDto> boardSliceDto = boardSlice.map(board -> {
             Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
             return new GetBoardListResponseDto(board, member, commentRepository.countByBoard(board));
@@ -103,4 +106,12 @@ public class BoardService {
     }
 
 
+    public List<GetBoardListResponseDto> getBestBoards() {
+        List<Board> top3By = boardRepository.findTop3By();
+        List<GetBoardListResponseDto> getBoardListResponseDtos = top3By.stream().map(board -> {
+            Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
+            return new GetBoardListResponseDto(board, member, commentRepository.countByBoard(board));
+        }).toList();
+        return getBoardListResponseDtos;
+    }
 }
