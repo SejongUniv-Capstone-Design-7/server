@@ -21,7 +21,7 @@ public class GetBoardResponseDto {
     private Long memberId;
     private String nickname;
     private Integer likeNum;
-    private List<Long> likeMemberIds;
+    private List<Long> likeMemberIds; // 해당 게시물 좋아요 누른 사용자ID
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd' 'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 

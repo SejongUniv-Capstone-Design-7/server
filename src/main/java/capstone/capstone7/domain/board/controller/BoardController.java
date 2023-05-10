@@ -20,6 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/boards")
@@ -38,6 +40,11 @@ public class BoardController {
     @GetMapping()
     public SliceResponseDto<GetBoardListResponseDto> getBoardsList(@PageableDefault(sort="createdDate",direction = Sort.Direction.DESC) Pageable pageable, @RequestParam Tag tag){ // 기본적으로는 수정일자(modifiedDate) 기준 오름차순 정렬
         return new SliceResponseDto<>(boardService.getBoardsList(tag, pageable));
+    }
+
+    @GetMapping("/best")
+    public BaseResponseDto<List<GetBoardListResponseDto>> getBoard(){
+        return new BaseResponseDto<>(boardService.getBestBoards());
     }
 
     @GetMapping("/{boardId}")
