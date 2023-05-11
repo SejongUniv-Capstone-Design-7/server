@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -105,9 +106,11 @@ public class BoardService {
         return new BoardDeleteResponseDto(boardId);
     }
 
-
     public List<GetBoardListResponseDto> getBestBoards() {
-        List<Board> top3By = boardRepository.findTop3By();
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+
+        List<Board> top3By = boardRepository.findTop3ByLikeNumDesc(oneWeekAgo, today);
         List<GetBoardListResponseDto> getBoardListResponseDtos = top3By.stream().map(board -> {
             Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
             return new GetBoardListResponseDto(board, member, commentRepository.countByBoard(board));
