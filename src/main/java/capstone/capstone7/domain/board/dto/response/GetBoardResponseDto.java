@@ -21,11 +21,12 @@ public class GetBoardResponseDto {
     private Long memberId;
     private String nickname;
     private Integer likeNum;
+    private Integer commentNum;
     private List<Long> likeMemberIds; // 해당 게시물 좋아요 누른 사용자ID
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd' 'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
-    public GetBoardResponseDto(Board board, Member member, List<Long> likeMemberIds) {
+    public GetBoardResponseDto(Board board, Member member, Integer commentNum, List<Long> likeMemberIds) {
         this.boardId = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
@@ -36,6 +37,7 @@ public class GetBoardResponseDto {
         this.createdDate = board.getCreatedDate();
         this.nickname = member.getNickname();
         this.likeNum = board.getLikeNum();
+        this.commentNum = commentNum;
         this.likeMemberIds = likeMemberIds;
     }
 }
