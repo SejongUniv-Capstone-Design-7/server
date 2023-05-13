@@ -70,7 +70,7 @@ public class BoardService {
     public GetBoardResponseDto getBoard(Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BusinessException(NOT_EXIST_BOARD));
         Member member = memberRepository.findById(board.getMember().getId()).orElseThrow(() -> new BusinessException(NOT_EXIST_USER));
-        return new GetBoardResponseDto(board, member, likeRepository.findLikeMemberIdsByBoard(board));
+        return new GetBoardResponseDto(board, member, commentRepository.countByBoard(board), likeRepository.findLikeMemberIdsByBoard(board));
     }
 
     @Transactional
