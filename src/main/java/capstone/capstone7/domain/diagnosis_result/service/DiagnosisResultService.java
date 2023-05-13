@@ -34,7 +34,7 @@ public class DiagnosisResultService {
     private final FileService fileService;
     private final DiagnosisResultRepository diagnosisResultRepository;
     private WebClient webClient;
-    private final List<String> errorMessages = Arrays.asList("", "진단의 정확도가 낮습니다.",
+    private final List<String> errorMessages = Arrays.asList("정확한 진단입니다.", "진단의 정확도가 낮습니다.",
             "작물 선택이 잘못되었을 가능성이 큽니다. 작물 종류를 올바르게 선택 후 재 검사 해주세요.",
             "지원되지 않는 작물일 가능성이 큽니다.");
 
@@ -72,7 +72,7 @@ public class DiagnosisResultService {
         Boolean isCorrect = diagnosisResultFromAIServer.getErrnum() == 1 ? true : false;
         DiagnosisResponseDto diagnosisResponseDto = new DiagnosisResponseDto(isCorrect, diagnosisResultFromAIServer.getDisease_name(),
                 diagnosisResultFromAIServer.getIn_info(), diagnosisResultFromAIServer.getOut_info(),
-                diagnosisResultFromAIServer.getClass_prob_list(), errorMessages.get(diagnosisResultFromAIServer.getErrnum()));
+                diagnosisResultFromAIServer.getClass_prob_list(), errorMessages.get(diagnosisResultFromAIServer.getErrnum() - 1));
         
         // 로그인한 유저이고, 올바른 병해충 검출을 수행한 경우, AI서버에서 받아온 병해충 진단 정보를 diagnosis Result에 저장
         if(loginUser != null && isCorrect){
