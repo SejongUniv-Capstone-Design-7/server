@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static capstone.capstone7.global.error.enums.ErrorMessage.INVALID_USER;
-import static capstone.capstone7.global.error.enums.ErrorMessage.NOT_EXIST_USER;
+import static capstone.capstone7.global.error.enums.ErrorMessage.*;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -44,6 +43,10 @@ public class MemberService {
 
         if(member.getId() != loginUser.getMember().getId()){
             throw new BusinessException(INVALID_USER);
+        }
+
+        if(memberRepository.existsByNickname(memberPatchRequestDto.getNickname())){
+            throw new BusinessException(DUPLICATED_NICKNAME);
         }
 
         member.update(memberPatchRequestDto.getNickname(), memberPatchRequestDto.getRegion());
