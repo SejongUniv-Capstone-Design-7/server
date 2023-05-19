@@ -38,7 +38,7 @@ public class AuthService {
         }
 
         if(memberRepository.existsByEmail(signUpRequestDto.getEmail())){
-            throw new AuthException(DUPLICATED_USER);
+            throw new AuthException(DUPLICATED_EMAIL);
         }
 
         Member newMember = Member.builder()
