@@ -70,7 +70,7 @@ public class DiagnosisResultService {
                 .block();
 
         Boolean isCorrect = diagnosisResultFromAIServer.getErrnum() == 1 ? true : false;
-        DiagnosisResponseDto diagnosisResponseDto = new DiagnosisResponseDto(isCorrect, diagnosisResultFromAIServer.getDisease_name(),
+        DiagnosisResponseDto diagnosisResponseDto = new DiagnosisResponseDto(diagnosisResultFromAIServer.getErrnum(), isCorrect, diagnosisResultFromAIServer.getDisease_name(),
                 diagnosisResultFromAIServer.getIn_info(), diagnosisResultFromAIServer.getOut_info(),
                 diagnosisResultFromAIServer.getClass_prob_list(), errorMessages.get(diagnosisResultFromAIServer.getErrnum() - 1));
         
