@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class DiagnosisResponseDto {
+    private Integer errnum;
     private Boolean isCorrect;
     private String diseaseName;
     private String inCropInfo;

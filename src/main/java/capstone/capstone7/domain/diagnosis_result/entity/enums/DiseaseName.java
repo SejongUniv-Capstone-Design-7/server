@@ -10,8 +10,8 @@ public enum DiseaseName {
     PEPPER_BACTERIAL_SPOT("고추점무늬병", 2),
     STRAWBERRY_GRAY_MOLD("딸기잿빛곰팡이병", 4),
     STRAWBERRY_POWDERY_MILDEW("딸기흰가루병", 5),
-    RETTUCE_SCLEROTINIA_ROT("상추균핵병", 7),
-    RETTUCE_DOWNY_MILDEW("상추노균병", 8),
+    LETTUCE_SCLEROTINIA_ROT("상추균핵병", 7),
+    LETTUCE_DOWNY_MILDEW("상추노균병", 8),
     TOMATO_LEAF_MOLD("토마토잎곰팡이병",10),
     TOMATO_YELLOW_LEAF_CURL_VIRUS("토마토황화잎말이바이러스", 11);
 
