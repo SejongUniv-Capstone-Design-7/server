@@ -28,6 +28,7 @@ public class SecurityConfig {
             "/auth/**",
             "/diagnosis", // 추후 정확하게 GET 요청에 대해서만 permitAll 필요
             "/boards/best", // 좋아요 가장 많은 게시물 3개
+            "/diagnosis-result",
             /* swagger v2 */
             "/v2/api-docs",
             "/swagger-resources",
