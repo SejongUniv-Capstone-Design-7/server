@@ -4,7 +4,6 @@ import capstone.capstone7.domain.diagnosis_result.dto.*;
 import capstone.capstone7.domain.diagnosis_result.entity.DiagnosisResult;
 import capstone.capstone7.domain.diagnosis_result.entity.enums.DiseaseName;
 import capstone.capstone7.domain.diagnosis_result.repository.DiagnosisResultRepository;
-import capstone.capstone7.domain.member.entity.Member;
 import capstone.capstone7.domain.member.entity.enums.Region;
 import capstone.capstone7.domain.member.repository.MemberRepository;
 import capstone.capstone7.global.S3.FileService;
@@ -22,10 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static capstone.capstone7.global.error.enums.ErrorMessage.EMPTY_FILE;
 import static capstone.capstone7.global.error.enums.ErrorMessage.WRONG_REGION;
@@ -152,9 +151,9 @@ public class DiagnosisResultService {
         // 다음 달의 1일로 설정
         LocalDateTime nextMonthFirstDay = currentDate.plusMonths(1).withDayOfMonth(1);
 
-        List<DiagnosisResultMonthlyCountDto> monthlyDiseaseCount = diagnosisResultRepository.findMonthlyDiseaseCount(firstDayOfMonth, nextMonthFirstDay);
-        
-        return monthlyDiseaseCount;
+        List<DiagnosisResultMonthlyCount> monthlyDiseaseCount = diagnosisResultRepository.findMonthlyDiseaseCount(firstDayOfMonth, nextMonthFirstDay);
+        List<DiagnosisResultMonthlyCountDto> collect = monthlyDiseaseCount.stream().map(obj -> new DiagnosisResultMonthlyCountDto(obj.getRegion().getKoreanName(), obj.getDiseaseCount())).collect(Collectors.toList());
+        return collect;
     }
 
 
