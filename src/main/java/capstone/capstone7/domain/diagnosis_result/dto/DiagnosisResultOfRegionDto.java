@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 public class DiagnosisResultOfRegionDto {
     private DiseaseName diseaseName;
-    private Long diseaseNum;
+    private Long diseaseCount;
 }
