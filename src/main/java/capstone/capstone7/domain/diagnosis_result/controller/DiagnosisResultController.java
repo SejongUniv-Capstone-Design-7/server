@@ -1,9 +1,6 @@
 package capstone.capstone7.domain.diagnosis_result.controller;
 
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisRequestDto;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResponseDto;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultFromAIServer;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultOfRegionDto;
+import capstone.capstone7.domain.diagnosis_result.dto.*;
 import capstone.capstone7.domain.diagnosis_result.service.DiagnosisResultService;
 import capstone.capstone7.global.auth.entity.LoginUser;
 import capstone.capstone7.global.common.response.BaseResponseDto;
@@ -36,6 +33,12 @@ public class DiagnosisResultController {
     public BaseResponseDto<List<DiagnosisResultOfRegionDto>> diagnosisResultOfRegion(@RequestParam(value = "region") String region){
 
         return new BaseResponseDto<>(diagnosisResultService.diagnosisResultOfRegion(region));
+    }
+
+    @GetMapping(value = "/diagnosis-result/monthly")
+    public BaseResponseDto<List<DiagnosisResultMonthlyCountDto>> diagnosisResultOfRegion(){
+
+        return new BaseResponseDto<>(diagnosisResultService.diagnosisResultMonthlyCount());
     }
 
 }
