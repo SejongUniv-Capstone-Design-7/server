@@ -138,7 +138,21 @@ public class DiagnosisResultService {
             throw new BusinessException(WRONG_REGION);
         }
 
-        return diagnosisResultRepository.findByRegion(firstDayOfMonth, nextMonthFirstDay, engRegion);
+
+        ArrayList<DiagnosisResultOfRegionDto> diagnosisResultOfRegionDtos = new ArrayList<>();
+        for (DiseaseName value : DiseaseName.values()) {
+            diagnosisResultOfRegionDtos.add(new DiagnosisResultOfRegionDto(value.getKoreanDiseaseName(), 0L));
+        }
+        List<DiagnosisResultOfRegion> byRegion = diagnosisResultRepository.findByRegion(firstDayOfMonth, nextMonthFirstDay, engRegion);
+
+        for (DiagnosisResultOfRegion diagnosisResultOfRegion : byRegion) {
+            for (DiagnosisResultOfRegionDto diagnosisResultOfRegionDto : diagnosisResultOfRegionDtos) {
+                if(diagnosisResultOfRegion.getDiseaseName().getKoreanDiseaseName().equals(diagnosisResultOfRegionDto.getDiseaseName())){
+                    diagnosisResultOfRegionDto.updateCount(diagnosisResultOfRegion.getDiseaseCount());
+                }
+            }
+        }
+        return diagnosisResultOfRegionDtos;
     }
 
     public List<DiagnosisResultMonthlyCountDto> diagnosisResultMonthlyCount() {
