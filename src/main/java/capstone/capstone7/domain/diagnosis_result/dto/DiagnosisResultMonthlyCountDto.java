@@ -8,4 +8,8 @@ import lombok.Getter;
 public class DiagnosisResultMonthlyCountDto {
     private String region;
     private Long diseaseCount;
+
+    public void updateCount(Long diseaseCount) {
+        this.diseaseCount = diseaseCount;
+    }
 }
