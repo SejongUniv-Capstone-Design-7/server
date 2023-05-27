@@ -1,6 +1,7 @@
 package capstone.capstone7.domain.diagnosis_result.repository;
 
 import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultMonthlyCount;
+import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultOfRegion;
 import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultOfRegionDto;
 import capstone.capstone7.domain.diagnosis_result.entity.DiagnosisResult;
 import capstone.capstone7.domain.member.entity.enums.Region;

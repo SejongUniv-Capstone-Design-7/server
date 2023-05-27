@@ -22,9 +22,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static capstone.capstone7.global.error.enums.ErrorMessage.EMPTY_FILE;
 import static capstone.capstone7.global.error.enums.ErrorMessage.WRONG_REGION;
@@ -151,12 +151,22 @@ public class DiagnosisResultService {
         // 다음 달의 1일로 설정
         LocalDateTime nextMonthFirstDay = currentDate.plusMonths(1).withDayOfMonth(1);
 
+
+        ArrayList<DiagnosisResultMonthlyCountDto> diagnosisResultMonthlyCountDtos = new ArrayList<>();
+        for (Region value : Region.values()) {
+            diagnosisResultMonthlyCountDtos.add(new DiagnosisResultMonthlyCountDto(value.getKoreanName(), 0L));
+        }
+
         List<DiagnosisResultMonthlyCount> monthlyDiseaseCount = diagnosisResultRepository.findMonthlyDiseaseCount(firstDayOfMonth, nextMonthFirstDay);
-        List<DiagnosisResultMonthlyCountDto> collect = monthlyDiseaseCount.stream().map(obj -> new DiagnosisResultMonthlyCountDto(obj.getRegion().getKoreanName(), obj.getDiseaseCount())).collect(Collectors.toList());
-        return collect;
+        for (DiagnosisResultMonthlyCount diagnosisResultMonthlyCount : monthlyDiseaseCount) {
+            for (DiagnosisResultMonthlyCountDto diagnosisResultMonthlyCountDto : diagnosisResultMonthlyCountDtos) {
+                if(diagnosisResultMonthlyCount.getRegion().getKoreanName().equals(diagnosisResultMonthlyCountDto.getRegion())){
+                    diagnosisResultMonthlyCountDto.updateCount(diagnosisResultMonthlyCount.getDiseaseCount());
+                }
+            }
+        }
+
+        return diagnosisResultMonthlyCountDtos;
     }
-
-
-
 }
 
