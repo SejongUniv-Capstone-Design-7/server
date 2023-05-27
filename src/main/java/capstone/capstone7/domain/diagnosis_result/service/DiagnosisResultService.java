@@ -1,9 +1,6 @@
 package capstone.capstone7.domain.diagnosis_result.service;
 
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisRequestDto;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResponseDto;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultFromAIServer;
-import capstone.capstone7.domain.diagnosis_result.dto.DiagnosisResultOfRegionDto;
+import capstone.capstone7.domain.diagnosis_result.dto.*;
 import capstone.capstone7.domain.diagnosis_result.entity.DiagnosisResult;
 import capstone.capstone7.domain.diagnosis_result.entity.enums.DiseaseName;
 import capstone.capstone7.domain.diagnosis_result.repository.DiagnosisResultRepository;
@@ -145,4 +142,22 @@ public class DiagnosisResultService {
         return diagnosisResultRepository.findByRegion(firstDayOfMonth, nextMonthFirstDay, engRegion);
     }
 
+    public List<DiagnosisResultMonthlyCountDto> diagnosisResultMonthlyCount() {
+        // 현재 날짜 가져오기
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        // 월 기준 1일로 설정
+        LocalDateTime firstDayOfMonth = currentDate.withDayOfMonth(1);
+
+        // 다음 달의 1일로 설정
+        LocalDateTime nextMonthFirstDay = currentDate.plusMonths(1).withDayOfMonth(1);
+
+        List<DiagnosisResultMonthlyCountDto> monthlyDiseaseCount = diagnosisResultRepository.findMonthlyDiseaseCount(firstDayOfMonth, nextMonthFirstDay);
+        
+        return monthlyDiseaseCount;
+    }
+
+
+
 }
+
