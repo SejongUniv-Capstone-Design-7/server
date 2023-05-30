@@ -90,6 +90,7 @@ public class FileService {
         // 비어있는 파일인지 확인
         if (multipartFile == null) return null;
         if (multipartFile.isEmpty()) return null;
+        log.info("filefullname save to S3 {}", multipartFile.getOriginalFilename());
         String imageType = getExtension(multipartFile);
         String savedFileName = getSavedFileName(userId, multipartFile);// 저장할 파일명
         ObjectMetadata metadata = new ObjectMetadata();
