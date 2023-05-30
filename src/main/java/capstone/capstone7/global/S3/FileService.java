@@ -90,7 +90,6 @@ public class FileService {
         // 비어있는 파일인지 확인
         if (multipartFile == null) return null;
         if (multipartFile.isEmpty()) return null;
-        
         String imageType = getExtension(multipartFile);
         String savedFileName = getSavedFileName(userId, multipartFile);// 저장할 파일명
         ObjectMetadata metadata = new ObjectMetadata();
@@ -113,8 +112,10 @@ public class FileService {
 
     // 병해충 진단에 사용되는 파일명 생성
     public String getDiagnosisFileNameSendToAIServer(MultipartFile file, String crop_sort) {
+        log.info("filefullname send to AIserver : {}", file.getOriginalFilename());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter currentTime = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        log.info("file ext send to AIserver : {}", getExtension(file));
         return String.format("%s_%s_%s.%s",
                 crop_sort, now.format(currentTime), getRandomUUID(), getExtension(file));
     }
