@@ -10,4 +10,4 @@ sudo docker rmi $(docker images -q)
 echo "start docker-compose up: ubuntu"  >> $DEPLOY_LOG
 sudo docker-compose -f /home/ubuntu/app2/docker-compose.yml up --build -d
 
-docker logs spring > $APP_LOG
+docker logs spring >> $APP_LOG
