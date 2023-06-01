@@ -66,17 +66,35 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring .
           docker push ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring
 
-      # (5) Deploy to AWS EC2
-      - name : Deploy to AWS EC2
+      - name: create remote directory # ec2 서버에 디렉토리를 하나 만들어준다.
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker rm -f $(docker ps -qa)
-            docker pull ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring
-            docker pull ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:nginx8080
-            docker-compose up -d
-            docker rmi -f ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring
-            docker rmi -f ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:nginx8080
+            sudo rm -rf /home/ubuntu/app2
+            mkdir -p /home/ubuntu/app2
+
+      - name: copy source via ssh key # ssh key를 이용해 현재 푸시된 소스를 서버에 복사한다.
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          remote_path: /home/ubuntu/app2
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.KEY }}
+
+      ## 서버에 접속하여 도커 이미지를 pull 받고 실행하기
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            sudo docker stop $(docker ps -a -q)
+            sudo docker rm $(docker ps -a -q)
+            sudo docker rmi $(docker images -q) 
+            sudo docker-compose -f /home/ubuntu/app2/docker-compose.yml up --build -d
