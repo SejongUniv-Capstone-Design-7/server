@@ -4,12 +4,12 @@ services:
     container_name: spring
     image: mingsound/sejong-capstone:spring
     ports:
-      - "8080:8080"
+      - "8081:8080"
     build: .
 
   nginx:
     container_name: nginx
-    image: mingsound/sejong-capstone:nginx8080
+    image: mingsound/sejong-capstone:nginx
     ports:
       - "80:80"
     depends_on: # spring-boot 컨테이너가 뜬 다음에 nginx 컨테이너 뜨도록
