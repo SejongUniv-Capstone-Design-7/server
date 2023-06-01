@@ -1,10 +1,16 @@
-version: '3'
+version: '3.0'
 services:
-
   spring:
     container_name: spring
-    image: mingsound/sejong-capstone
-    expose:
-      - 8080
+    image: mingsound/sejong-capstone:0.1
     ports:
-      - 8080:8080
+      - "8080:8080"
+    build: .
+
+  nginx:
+    container_name: nginx
+    image: mingsound/sejong-capstone:ngnix8080
+    ports:
+      - "80:80"
+    depends_on: # spring-boot 컨테이너가 뜬 다음에 nginx 컨테이너 뜨도록
+      - spring

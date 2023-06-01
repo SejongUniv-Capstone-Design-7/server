@@ -16,6 +16,7 @@
 
 FROM openjdk:17-jdk-alpine
 COPY build/libs/*jar capstone7.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","/capstone7.jar"]
 # 설정파일 분리해서 사용시
 # java -jar -Dspring.profiles.active=prod capstone7.jar
