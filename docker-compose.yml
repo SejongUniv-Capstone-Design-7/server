@@ -2,7 +2,7 @@ version: '3.0'
 services:
   spring:
     container_name: spring
-    image: mingsound/sejong-capstone:0.1
+    image: mingsound/sejong-capstone:spring
     ports:
       - "8080:8080"
     build: .

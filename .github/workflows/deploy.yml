@@ -75,5 +75,8 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             sudo docker rm -f $(docker ps -qa)
+            docker pull ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring
+            docker pull ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:nginx8080
             docker-compose up -d
-            docker image prune -f
+            docker rmi -f ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:spring
+            docker rmi -f ${{ secrets.DOCKER_USERNAME }}/sejong-capstone:nginx8080
