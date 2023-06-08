@@ -63,7 +63,6 @@ dependencies {
 
 	// sentry-logback - send error log to Sentry
 	implementation 'io.sentry:sentry-logback:6.21.0'
-	implementation 'io.sentry:sentry-log4j2:5.7.4'
 }
 
 tasks.named('test') {
