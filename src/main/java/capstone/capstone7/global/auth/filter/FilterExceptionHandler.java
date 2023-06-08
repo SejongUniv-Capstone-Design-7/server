@@ -4,7 +4,6 @@ import capstone.capstone7.global.common.response.BaseResponseDto;
 import capstone.capstone7.global.error.exception.custom.AuthException;
 import capstone.capstone7.global.error.exception.custom.InvalidTokenException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.sentry.Sentry;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
            filterChain.doFilter(request, response);
         }catch(InvalidTokenException | AuthException e){
             log.warn("FilterExceptionHandler {}", e.getErrorMessage());
-            Sentry.captureException(e);
+            // Sentry.captureException(e);
             response.setStatus(e.getErrorMessage().getCode());
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
