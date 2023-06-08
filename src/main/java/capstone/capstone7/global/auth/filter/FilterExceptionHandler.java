@@ -1,7 +1,6 @@
 package capstone.capstone7.global.auth.filter;
 
 import capstone.capstone7.global.common.response.BaseResponseDto;
-import capstone.capstone7.global.error.enums.ErrorMessage;
 import capstone.capstone7.global.error.exception.custom.AuthException;
 import capstone.capstone7.global.error.exception.custom.InvalidTokenException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +24,7 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
         try{
            filterChain.doFilter(request, response);
         }catch(InvalidTokenException | AuthException e){
-            log.info("FilterExceptionHandler {}", e.getErrorMessage());
+            log.warn("FilterExceptionHandler {}", e.getErrorMessage());
             Sentry.captureException(e);
             response.setStatus(e.getErrorMessage().getCode());
             response.setContentType("application/json");
