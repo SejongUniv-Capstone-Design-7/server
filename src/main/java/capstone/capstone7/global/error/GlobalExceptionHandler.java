@@ -4,6 +4,7 @@ import capstone.capstone7.global.common.response.BaseResponseDto;
 import capstone.capstone7.global.error.enums.ErrorMessage;
 import capstone.capstone7.global.error.exception.custom.AuthException;
 import capstone.capstone7.global.error.exception.custom.BusinessException;
+import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,6 +19,7 @@ import static capstone.capstone7.global.error.enums.ErrorMessage.FILE_SIZE_EXCEE
 public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public BaseResponseDto<ErrorMessage> businessExceptionHandle(BusinessException e) {
+        Sentry.captureException(e);
         log.warn("businessException : {}", e);
         return new BaseResponseDto(e.getErrorMessage());
     }
@@ -25,18 +27,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FileSizeLimitExceededException.class)
     public BaseResponseDto<ErrorMessage> fileSizeLimitExceededExceptionHandle(FileSizeLimitExceededException e){
         log.warn("businessException : {}", e);
+        Sentry.captureException(e);
         return new BaseResponseDto(FILE_SIZE_EXCEEDED);
     }
 
     @ExceptionHandler(AuthException.class)
     public BaseResponseDto<ErrorMessage> authExceptionHandle(AuthException e) {
         log.warn("authException : {}", e);
+        Sentry.captureException(e);
         return new BaseResponseDto(e.getErrorMessage());
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public BaseResponseDto<ErrorMessage> badCredentialsExceptionHandle(BadCredentialsException e) {
         log.warn("badCredentialsException : {}", e);
+        Sentry.captureException(e);
         return new BaseResponseDto(ErrorMessage.WRONG_PASSWORD);
     }
 
@@ -44,6 +49,7 @@ public class GlobalExceptionHandler {
     public BaseResponseDto<ErrorMessage> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         log.warn("methodArgumentNotValidException : {}", errorMessage);
+        Sentry.captureException(e);
         return new BaseResponseDto(1301, false, errorMessage);
     }
 }
