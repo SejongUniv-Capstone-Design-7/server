@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod, security
+    active: prod, security, sentry
   #mvc:
     #pathmatch:
       #matching-strategy: ant-path-matcher
