@@ -25,3 +25,8 @@ logging:
     max-history: 1
     max-size: 10MB
 
+sentry:
+  dsn: https://06c6e0bc3cda4ea19a27e7f08aa60200@o4505322015490048.ingest.sentry.io/4505322017652736
+  traces-sample-rate: 1.0
+  stacktrace.app.packages: capstone.capstone7
+  server-name: capstone
