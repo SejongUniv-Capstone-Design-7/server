@@ -51,10 +51,10 @@ jobs:
 
       - name: Copy sentry secret
         env:
-          SECURITY_SECRET: ${{ secrets.SENTRY_SECRET }}
-          SECURITY_SECRET_DIR: src/main/resources
-          SECURITY_SECRET_DIR_FILE_NAME: application-sentry.yml
-        run: echo $SECURITY_SECRET | base64 --decode >> $SECURITY_SECRET_DIR/$SECURITY_SECRET_DIR_FILE_NAME
+          SENTRY_SECRET: ${{ secrets.SENTRY_SECRET }}
+          SENTRY_SECRET_DIR: src/main/resources
+          SENTRY_SECRET_DIR_FILE_NAME: application-sentry.yml
+        run: echo $SENTRY_SECRET | base64 --decode >> $SENTRY_SECRET_DIR/$SENTRY_SECRET_DIR_FILE_NAME
 
       # Error Gradle Script ‘/Home/Runner/Work/*/Gradlew’ Is Not Executable 에러 해결
       - name: Run chmod to make gradlew executable
