@@ -39,3 +39,4 @@ out/
 ### Project ###
 application-prod.yml
 application-security.yml
+application-sentry.yml
