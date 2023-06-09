@@ -77,7 +77,10 @@ public class DiagnosisResultService {
         DiagnosisResponseDto diagnosisResponseDto = new DiagnosisResponseDto(diagnosisResultFromAIServer.getErrnum(), isCorrect, diagnosisResultFromAIServer.getDisease_name(),
                 diagnosisResultFromAIServer.getIn_info(), diagnosisResultFromAIServer.getOut_info(),
                 diagnosisResultFromAIServer.getClass_prob_list(), errorMessages.get(diagnosisResultFromAIServer.getErrnum() - 1));
-        
+
+        log.info("diagnosisResultFromAIServer : {}", diagnosisResultFromAIServer.getDisease_name());
+
+
         // 로그인한 유저이고, 올바른 병해충 검출을 수행한 경우, AI서버에서 받아온 병해충 진단 정보를 diagnosis Result에 저장
         if(loginUser != null && isCorrect){
             DiseaseName mostDisease = getMostDisease(diagnosisResultFromAIServer.getClass_prob_list());
