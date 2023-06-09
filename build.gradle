@@ -2,10 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.5'
 	id 'io.spring.dependency-management' version '1.1.0'
-	id "io.sentry.jvm.gradle" version "3.9.0"
+//	id "io.sentry.jvm.gradle" version "3.9.0"
 }
 
-sentry {
+/*sentry {
 	// Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
 	// This enables source context, allowing you to see your source
 	// code as part of your stack traces in Sentry.
@@ -14,7 +14,7 @@ sentry {
 	org = "___ORG_SLUG___"
 	projectName = "___PROJECT_SLUG___"
 	authToken = "your-sentry-auth-token"
-}
+}*/
 
 group = 'capstone'
 version = '0.0.1-SNAPSHOT'
