@@ -114,6 +114,8 @@ public class FileService {
 
     // 병해충 진단에 사용되는 파일명 생성
     public String getDiagnosisFileNameSendToAIServer(MultipartFile file, String crop_sort) {
+        log.info("file size send to AIserver : {}", file.getSize());
+        log.info("file contentType send to AIserver : {}", file.getContentType());
         log.info("filefullname send to AIserver : {}", file.getOriginalFilename());
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter currentTime = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
